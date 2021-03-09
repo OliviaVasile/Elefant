@@ -1,0 +1,9 @@
+{
+  "account": {
+    "username": "user1",
+    "password": "pass2"
+  },
+  "userError": "",
+  "passwordError": "",
+  "generalError": ": The username or password you entered is incorrect. "
+}

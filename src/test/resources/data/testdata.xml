@@ -1,0 +1,9 @@
+<loginModel>
+    <account>
+        <username>user1</username>
+        <password>password1</password>
+    </account>
+    <userError/>
+    <passwordError/>
+    <generalError>ERROR: The username or password you entered is incorrect. Lost your password?</generalError>
+</loginModel>
