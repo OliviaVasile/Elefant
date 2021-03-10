@@ -46,9 +46,7 @@ public class Verify {
 
         WebElement err1 = driver.findElement(By.xpath("//*[@id=\"login-form\"]/form/div/div[2]/div"));
 
-//        System.out.println(err1.getText());
-//        System.out.println(err2.getText());
-//        System.out.println(err3.getText());
+
         Assert.assertEquals(err1.getText(), genErrMsg);
         ;
 
