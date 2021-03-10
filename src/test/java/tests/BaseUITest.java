@@ -12,6 +12,11 @@ import java.util.Properties;
 public class BaseUITest {
     WebDriver driver;
     String hostname;
+    String dbHostname;
+    String dbPort;
+    String dbSchema;
+    String dbUsername;
+    String dbPassword;
 
     @BeforeClass
     public void setUp(){String browserType = null;
@@ -34,6 +39,16 @@ public class BaseUITest {
 
             hostname = prop.getProperty("hostname");
             System.out.println("Use the next hostname:" + hostname);
+            dbHostname = prop.getProperty("dbHostname");
+            System.out.println("Using DB hostname: " + dbHostname);
+            dbPort = prop.getProperty("dbPort");
+            System.out.println("Using DB port: " + dbPort);
+            dbSchema = prop.getProperty("dbSchema");
+            System.out.println("Using DB schema" + dbSchema);
+            dbUsername = prop.getProperty("dbUsername");
+            dbPassword = prop.getProperty("dbPassword");
+            System.out.println("Using DB credentials " + dbUsername + dbPassword );
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

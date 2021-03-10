@@ -1,9 +1,9 @@
 {
   "account": {
-    "username": "user1",
-    "password": "pass2"
+    "username": "user1@user.ro",
+    "password": "password1"
   },
   "userError": "",
   "passwordError": "",
-  "generalError": ": The username or password you entered is incorrect. "
+  "generalError": "Parola sau autentificare incorecta."
 }

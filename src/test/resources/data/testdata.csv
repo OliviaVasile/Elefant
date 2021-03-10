@@ -1,4 +1,4 @@
-user1,,,: câmpul parolă este gol.		,,
-,pass1, Numele de utilizator este obligatoriu.		,,,
-user1,pass1,,,,: The username or password you entered is incorrect. ,
-olivia,Primavara!1,,,,,
+user1@user.ro,,,Camp obligatoriu,,
+,password1,Camp obligatoriu,,,
+user1@user.ro,password1,,,,Parola sau autentificare incorecta.,
+

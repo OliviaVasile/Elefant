@@ -15,33 +15,40 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SeleniumUtils {
 
     public static WebDriver getDriver (String browserType) {
+
         WebDriver driver = null;
         Browsers browsers = getBrowserEnumFromString(browserType);
 
+
         switch (browsers) {
+
             case CHROME:
                 WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
+//
                 driver = new ChromeDriver();
                 break;
             case FIREFOX:
                 WebDriverManager.getInstance(DriverManagerType.FIREFOX).setup();
+                FirefoxProfile profile = new FirefoxProfile();
+
                 driver = new FirefoxDriver();
                 break;
             case EDGE:
                 WebDriverManager.getInstance(DriverManagerType.EDGE).setup();
                 driver = new EdgeDriver();
                 break;
-
             default:
-                System.out.println("WARNING selected browser is not supported: " + browsers.toString());
+                System.out.println("WARNING selected browser is not supported");
         }
         return driver;
+
     }
 
     public static Browsers getBrowserEnumFromString (String browserType) {
@@ -59,6 +66,5 @@ public class SeleniumUtils {
                 ExpectedConditions.presenceOfElementLocated(by)
         );
     }
-
 
 }

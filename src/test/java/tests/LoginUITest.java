@@ -18,10 +18,13 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+
+import static utils.OtherUtils.sanitizeNullDbString;
 
 public class LoginUITest extends BaseUITest {
 
@@ -132,8 +135,47 @@ public class LoginUITest extends BaseUITest {
     @Test(dataProvider = "xlsDp")
     public void xlsTest (LoginModel lm) {
         printData(lm);
+        loginActions(lm);
 
     }
+
+    @DataProvider (name="sqlDp")
+    public Iterator<Object[]> sqlDpCollection ( )  {
+        Collection<Object[]> dp = new ArrayList<>();
+        try {
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema,dbUsername,dbPassword);
+            Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery("SELECT * FROM automation.authentication;");
+            while(results.next()){
+                AccountModel am = new AccountModel();
+                am.setUsername(sanitizeNullDbString(results.getString("username")));
+                am.setPassword(sanitizeNullDbString(results.getString("password")));
+                LoginModel lm = new LoginModel();
+                lm.setAccount(am);
+                lm.setUserError(sanitizeNullDbString(results.getString("userError")));
+                lm.setPasswordError(sanitizeNullDbString(results.getString("passwordError")));
+                lm.setGeneralError(sanitizeNullDbString(results.getString("generalError")));
+                dp.add(new Object[]{lm});
+
+            }
+
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return dp.iterator();}
+
+        @Test (dataProvider = "sqlDp")
+        public void sqlTest(LoginModel lm) {
+            printData(lm);
+            loginActions(lm);
+
+        }
+
+
+
     private void loginActions (LoginModel lm){
         LoginPage lp = new LoginPage(driver);
         lp.openLoginPage(hostname);

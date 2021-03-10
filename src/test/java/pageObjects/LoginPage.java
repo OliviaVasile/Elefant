@@ -14,20 +14,23 @@ import utils.SeleniumUtils;
 public class LoginPage {
     private WebDriver driver;
     WebDriverWait wait;
-    @FindBy (xpath = "/html/body/div[3]/div/div[2]/a[2]/b")
-    WebElement cookiesMess;
-    @FindBy(xpath = "/html/body/div[2]/div/div[3]/div/main/article/div/div/div/form/p[1]/input")
+
+//    @FindBy(xpath = "/html/body/div[2]/div[4]/div[1]/div[1]/div[2]/div/div[2]/div[2]/div[1]/div/span")
+//    WebElement arrow;
+//    @FindBy(xpath = "/html/body/div[2]/div[4]/div[1]/div[1]/div[2]/div/div[2]/div[2]/div[2]/div/ul/li[1]/a")
+//            WebElement login;
+    @FindBy(id = "email")
     WebElement usernameInput;
-    @FindBy(xpath = "/html/body/div[2]/div/div[3]/div/main/article/div/div/div/form/p[2]/span/input")
+    @FindBy(id = "pass")
     WebElement passwordInput;
-    @FindBy(xpath = "/html/body/div[2]/div/div[3]/div/main/article/div/div/div/form/p[3]/button")
+    @FindBy(how = How.ID, using = "send2")
     WebElement Autentificare;
 
-    @FindBy(xpath = "/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li")
+    @FindBy(how = How.XPATH, using = "//*[@id=\"top\"]/body/div[2]/div[4]/div[1]/div[3]/div/div[2]/div[2]/ul/li/ul/li/span")
     WebElement errGeneral;
-    @FindBy(xpath = "/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li")
+    @FindBy(id = "advice-required-entry-pass")
     WebElement errPassword;
-    @FindBy(xpath = "/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li")
+    @FindBy(id = "advice-required-entry-email")
     WebElement errUserName;
 
     public LoginPage (WebDriver driver) {
@@ -41,18 +44,20 @@ public class LoginPage {
         usernameInput.sendKeys(username);
         passwordInput.clear();
         passwordInput.sendKeys(password);
-        cookiesMess.click();
-        Autentificare.click();
+//        cookiesMess.click();
+        Autentificare.submit();
 
+    }
+    public void waitForLoginPage() {
+        wait.until(ExpectedConditions.elementToBeClickable(Autentificare));
     }
 
 
-
-    public void initializeGeneralErrorElement() {
-        errGeneral = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li"), 30);
-        errPassword = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li"), 30);
-        errUserName = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li"), 30);
-    }
+//    public void initializeGeneralErrorElement() {
+//        errGeneral = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li"), 30);
+//        errPassword = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li"), 30);
+//        errUserName = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li"), 30);
+//    }
 
     public boolean checkErr (String error , String type) {
         if (type.equalsIgnoreCase("userErr"))
@@ -65,13 +70,16 @@ public class LoginPage {
     }
 
     public void openLoginPage (String hostname) {
-        System.out.println("Open the next url:" + hostname + "/contul-meu/");
-        driver.get(hostname + "/contul-meu/");
-        WebDriverWait wait = new WebDriverWait(driver , 15);
+        System.out.println("Open the next url:" + hostname + "customer/account/login/");
+        driver.get(hostname + "customer/account/login/");
+//
+//
+//        WebDriverWait wait = new WebDriverWait(driver , 25);
 //        for (int i = 0; i < 5; i++) {
-//            WebElement cookiesMess = wait.until(
-//                    ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[3]/div/div[2]/a[2]/b")));
-//            cookiesMess.click();
-//        }
+//            WebElement arrow = wait.until(
+//                    ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[2]/div[4]/div[1]/div[1]/div[2]/div/div[2]/div[2]/div[1]/div/span")));
+//            arrow.click();
+//            login.click();
+
+        }
     }
-}
