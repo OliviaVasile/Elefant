@@ -31,9 +31,12 @@ public class SeleniumUtils {
 
             case CHROME:
                 WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
-//
-                driver = new ChromeDriver();
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--start-maximized");
+                driver = new ChromeDriver(chromeOptions);
                 break;
+//
+
             case FIREFOX:
                 WebDriverManager.getInstance(DriverManagerType.FIREFOX).setup();
                 FirefoxProfile profile = new FirefoxProfile();
