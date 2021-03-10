@@ -16,10 +16,7 @@ public class LoginPage {
     private WebDriver driver;
     WebDriverWait wait;
 
-//    @FindBy(xpath = "/html/body/div[2]/div[4]/div[1]/div[1]/div[2]/div/div[2]/div[2]/div[1]/div/span")
-//    WebElement arrow;
-//    @FindBy(xpath = "/html/body/div[2]/div[4]/div[1]/div[1]/div[2]/div/div[2]/div[2]/div[2]/div/ul/li[1]/a")
-//            WebElement login;
+
     @FindBy(id = "u")
     WebElement usernameInput;
     @FindBy(id = "p")
@@ -51,15 +48,13 @@ public class LoginPage {
 
     }
 //    public void waitForLoginPage() {
-//        wait.until(ExpectedConditions.elementToBeClickable(IntraInCont));
+//        wait.until(ExpectedConditions.elementToBeClickable(Trimite));
 //    }
 
 
-//    public void initializeGeneralErrorElement() {
-//        errGeneral = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li"), 30);
-//        errPassword = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li"), 30);
-//        errUserName = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[2]/div/div[3]/div/main/article/div/div/div/div/ul/li"), 30);
-//    }
+    public void initializeGeneralErrorElement() {
+        errGeneral = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[5]/div/div/div/div/form/div/div[2]/div"), 15);
+    }
 
     public boolean checkErr (String error , String type) {
         if (type.equalsIgnoreCase("userErr"))
@@ -87,14 +82,7 @@ public class LoginPage {
     public void openLoginPage (String hostname) {
         System.out.println("Open the next url:" + hostname + "/index.php?action=account");
         driver.get(hostname + "/index.php?action=account");
-//
-//
-//        WebDriverWait wait = new WebDriverWait(driver , 25);
-//        for (int i = 0; i < 5; i++) {
-//            WebElement arrow = wait.until(
-//                    ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[2]/div[4]/div[1]/div[1]/div[2]/div/div[2]/div[2]/div[1]/div/span")));
-//            arrow.click();
-//            login.click();
+
 
         }
     }
