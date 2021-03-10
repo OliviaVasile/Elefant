@@ -70,6 +70,7 @@ public class LoginUITest extends BaseUITest {
     @Test(dataProvider = "xmlDp")
     public void xmlTest (LoginModel lm) {
         printData(lm);
+        loginActions(lm);
     }
 
     private void printData (LoginModel lm) {

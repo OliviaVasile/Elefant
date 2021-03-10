@@ -9,6 +9,7 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.OtherUtils;
 import utils.SeleniumUtils;
 
 public class LoginPage {
@@ -19,18 +20,18 @@ public class LoginPage {
 //    WebElement arrow;
 //    @FindBy(xpath = "/html/body/div[2]/div[4]/div[1]/div[1]/div[2]/div/div[2]/div[2]/div[2]/div/ul/li[1]/a")
 //            WebElement login;
-    @FindBy(id = "email")
+    @FindBy(id = "u")
     WebElement usernameInput;
-    @FindBy(id = "pass")
+    @FindBy(id = "p")
     WebElement passwordInput;
-    @FindBy(how = How.ID, using = "send2")
-    WebElement Autentificare;
+    @FindBy(xpath = "/html/body/div[5]/div/div/div/div/form/div/button/span")
+    WebElement Trimite;
 
-    @FindBy(how = How.XPATH, using = "//*[@id=\"top\"]/body/div[2]/div[4]/div[1]/div[3]/div/div[2]/div[2]/ul/li/ul/li/span")
+    @FindBy(xpath ="//html/body/div[5]/div/div/div/div/form/div/div[2]/div")
     WebElement errGeneral;
-    @FindBy(id = "advice-required-entry-pass")
+    @FindBy(xpath = "/html/body/div[5]/div/div/div/div/form/div/div[2]/div")
     WebElement errPassword;
-    @FindBy(id = "advice-required-entry-email")
+    @FindBy(xpath= "/html/body/div[5]/div/div/div/div/form/div/div[2]/div")
     WebElement errUserName;
 
     public LoginPage (WebDriver driver) {
@@ -45,12 +46,13 @@ public class LoginPage {
         passwordInput.clear();
         passwordInput.sendKeys(password);
 //        cookiesMess.click();
-        Autentificare.submit();
+        Trimite.submit();
+
 
     }
-    public void waitForLoginPage() {
-        wait.until(ExpectedConditions.elementToBeClickable(Autentificare));
-    }
+//    public void waitForLoginPage() {
+//        wait.until(ExpectedConditions.elementToBeClickable(IntraInCont));
+//    }
 
 
 //    public void initializeGeneralErrorElement() {
@@ -69,9 +71,22 @@ public class LoginPage {
         return false;
     }
 
+
+//    public boolean checkErr (String error , String type) {
+//        if (type.equalsIgnoreCase("userErr"))
+//            return OtherUtils.checkMessagePresentOnElement(errUserName, error);
+//        else if (type.equalsIgnoreCase("passErr"))
+//            return OtherUtils.checkMessagePresentOnElement(errPassword, error);
+//        else if (type.equalsIgnoreCase("generalErr"))
+//            return OtherUtils.checkMessagePresentOnElement(errGeneral, error);
+//
+//            return false;
+//        }
+
+
     public void openLoginPage (String hostname) {
-        System.out.println("Open the next url:" + hostname + "customer/account/login/");
-        driver.get(hostname + "customer/account/login/");
+        System.out.println("Open the next url:" + hostname + "/index.php?action=account");
+        driver.get(hostname + "/index.php?action=account");
 //
 //
 //        WebDriverWait wait = new WebDriverWait(driver , 25);

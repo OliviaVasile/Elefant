@@ -1,9 +1,9 @@
 <loginModel>
     <account>
-        <username>user1</username>
+        <username>user1@user.ro</username>
         <password>password1</password>
     </account>
     <userError/>
     <passwordError/>
-    <generalError>ERROR: The username or password you entered is incorrect. Lost your password?</generalError>
+    <generalError>Combinatia user / parola nu exista in baza de date!</generalError>
 </loginModel>
