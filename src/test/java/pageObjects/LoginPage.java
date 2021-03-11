@@ -1,10 +1,7 @@
 package pageObjects;
 
 import com.sun.xml.bind.v2.model.core.ID;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -32,7 +29,7 @@ public class LoginPage {
     @FindBy(id = "send2")
     WebElement Autentificare;
 
-    @FindBy(xpath = "//*[@id=\"top\"]/body/div[3]/div[3]/div[1]/div[3]/div/div[2]/div[2]/ul/li/ul/li")
+    @FindBy(xpath = "/html/body/div[2]/div[4]/div[1]/div[3]/div/div[2]/div[2]/ul/li/ul/li")
     WebElement errGeneral;
     @FindBy(id = "advice-required-entry-pass")
     WebElement errPassword;
@@ -51,10 +48,24 @@ public class LoginPage {
         passwordInput.clear();
         passwordInput.sendKeys(password);
         Autentificare.submit();
-        initializeGeneralErrorElement();
+        waitForError();
 
     }
 
+    public String waitForError() {
+        int retry = 0;
+        String error="";
+        while (retry < 3) {
+            try {
+//                error=SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[2]/div[4]/div[1]/div[3]/div/div[2]/div[2]/ul/li/ul/li"), 15).getText();
+                error=SeleniumUtils.waitForGenericElement(driver, By.id("advice-required-entry-pass"), 20).getText();
+//                error=SeleniumUtils.waitForGenericElement(driver, By.id("advice-required-entry-email"), 15).getText();
+                retry = 4;
+            } catch (ElementClickInterceptedException | NoSuchElementException e) {
+                retry++;
+            }
+        }
+        return error;}
 
     public void initializeGeneralErrorElement ( ) {
         errGeneral = SeleniumUtils.waitForGenericElement(driver , By.xpath("/html/body/div[5]/div/div/div/div/form/div/div[2]/div") , 15);
