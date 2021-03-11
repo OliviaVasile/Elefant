@@ -41,7 +41,7 @@ public class LoginPage {
 
     public LoginPage (WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver , 45);
+        wait = new WebDriverWait(driver , 15);
         PageFactory.initElements(this.driver , this);
     }
 
@@ -51,39 +51,40 @@ public class LoginPage {
         passwordInput.clear();
         passwordInput.sendKeys(password);
         Autentificare.submit();
-
+        initializeGeneralErrorElement();
 
     }
-//    public void waitForLoginPage() {
-//        wait.until(ExpectedConditions.elementToBeClickable(Trimite));
-//    }
 
 
     public void initializeGeneralErrorElement ( ) {
         errGeneral = SeleniumUtils.waitForGenericElement(driver , By.xpath("/html/body/div[5]/div/div/div/div/form/div/div[2]/div") , 15);
     }
 
-//    public boolean checkErr (String error , String type) {
-//        if (type.equalsIgnoreCase("userErr"))
-//            return error.equals(errUserName.getText());
-//        else if (type.equalsIgnoreCase("passErr"))
-//            return error.equals(errPassword.getText());
-//        else if (type.equalsIgnoreCase("generalErr"))
-//            return error.equals(errGeneral.getText());
-//        return false;
+    //    public void waitForLoginPage() {
+//        wait.until(ExpectedConditions.elementToBeClickable(Trimite));
 //    }
-
 
     public boolean checkErr (String error , String type) {
         if (type.equalsIgnoreCase("userErr"))
-            return OtherUtils.checkMessagePresentOnElement(errUserName , error);
+            return error.equals(errUserName.getText());
         else if (type.equalsIgnoreCase("passErr"))
-            return OtherUtils.checkMessagePresentOnElement(errPassword , error);
+            return error.equals(errPassword.getText());
         else if (type.equalsIgnoreCase("generalErr"))
-            return OtherUtils.checkMessagePresentOnElement(errGeneral , error);
-
+            return error.equals(errGeneral.getText());
         return false;
     }
+
+
+//    public boolean checkErr (String error , String type) {
+//        if (type.equalsIgnoreCase("userErr"))
+//            return OtherUtils.checkMessagePresentOnElement(errUserName , error);
+//        else if (type.equalsIgnoreCase("passErr"))
+//            return OtherUtils.checkMessagePresentOnElement(errPassword , error);
+//        else if (type.equalsIgnoreCase("generalErr"))
+//            return OtherUtils.checkMessagePresentOnElement(errGeneral , error);
+//
+//        return false;
+//    }
 
 
     public void openLoginPage (String hostname) {

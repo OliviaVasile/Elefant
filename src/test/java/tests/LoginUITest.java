@@ -118,7 +118,7 @@ public class LoginUITest extends BaseUITest {
     @DataProvider(name = "xlsDp")
     public Iterator<Object[]> xlsDpCollection ( ) throws Exception {
         Collection<Object[]> dp = new ArrayList<>();
-        File f = new File("src\\test\\resources\\data\\testdata.xlsx");
+        File f = new File("src\\test\\resources\\data\\testdataLoginNegative.xlsx");
         String[][] excelData = ExcelReader.readExcelFile(f,"sheet1", true, true);
         for (int i = 0; i < excelData.length; i++) {
             AccountModel ac = new AccountModel();
