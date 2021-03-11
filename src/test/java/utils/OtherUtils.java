@@ -20,17 +20,17 @@ public class OtherUtils {
         }
         return dbResult;
     }
-//    public static boolean checkMessagePresentOnElement(WebElement element, String expectedError){
-//        try {
-//            String acctualMsg = element.getText();
-//            return expectedError.equals(acctualMsg);
-//        }
-//        catch (NoSuchElementException e){
-//            if (expectedError.isEmpty())
-//                return true;
-//        }
-//        return false;
-//    }
+    public static boolean checkMessagePresentOnElement(WebElement element, String expectedError){
+        try {
+            String acctualMsg = element.getText();
+            return expectedError.equals(acctualMsg);
+        }
+        catch (NoSuchElementException e){
+            if (expectedError.isEmpty())
+                return true;
+        }
+        return false;
+    }
 
 //    public WebElement fluentWait(final By locator){
 //        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)

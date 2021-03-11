@@ -99,11 +99,11 @@ public class LoginPage {
 
     public boolean checkErr (String error , String type) {
         if (type.equalsIgnoreCase("userErr"))
-            return error.equals(SeleniumUtils.getElementMessage(driver, By.id("advice-required-entry-email")));
+            return SeleniumUtils.checkElementMessage(driver, By.id("advice-required-entry-email"), error);
         else if (type.equalsIgnoreCase("passErr"))
-            return error.equals(SeleniumUtils.getElementMessage(driver, By.id("advice-required-entry-pass")));
+            return SeleniumUtils.checkElementMessage(driver, By.id("advice-required-entry-pass"), error);
         else if (type.equalsIgnoreCase("generalErr"))
-            return error.equals(SeleniumUtils.getElementMessage(driver, By.xpath("//*[@id=\"top\"]/body/div[3]/div[3]/div[1]/div[3]/div/div[2]/div[2]/ul/li/ul/li/span")));
+            return SeleniumUtils.checkElementMessage(driver, By.xpath("//li[contains(@class, 'error-msg')]/ul/li/span"), error);;
         return false;
 
 //        String err = SeleniumUtils.getElementMessage(driver, By.xpath("//*[@id='login-form']/form/div/div[2]/div"));
@@ -128,8 +128,6 @@ public class LoginPage {
         System.out.println("Open the next url:" + hostname + "/customer/account/login/");
         driver.get(hostname + "/customer/account/login/");
         cookieMess.click();
-
-
     }
 //
 
