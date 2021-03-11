@@ -5,5 +5,5 @@
   },
   "userError": "",
   "passwordError": "",
-  "generalError": "Combinatia user / parola nu exista in baza de date!"
+  "generalError": "Parola sau autentificare incorecta."
 }

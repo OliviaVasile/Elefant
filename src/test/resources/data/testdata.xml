@@ -5,5 +5,5 @@
     </account>
     <userError/>
     <passwordError/>
-    <generalError>Combinatia user / parola nu exista in baza de date!</generalError>
+    <generalError>Parola sau autentificare incorecta.</generalError>
 </loginModel>

@@ -1,4 +1,4 @@
-user1@user.ro,,,Combinatia user / parola nu exista in baza de date!,,
-,password1,Combinatia user / parola nu exista in baza de date!,,,
-user1@user.ro,password1,,,,Combinatia user / parola nu exista in baza de date!.,
+user1@user.ro,,,Camp obligatoriu,,
+,password1,Camp obligatoriu,,,
+user1@user.ro,password1,,,,Parola sau autentificare incorecta.,
 
