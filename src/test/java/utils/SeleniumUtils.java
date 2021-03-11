@@ -2,9 +2,7 @@ package utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -21,7 +19,7 @@ import java.util.Map;
 
 public class SeleniumUtils {
 
-    public static WebDriver getDriver (String browserType) {
+    public static WebDriver getDriver(String browserType) {
 
         WebDriver driver = null;
         Browsers browsers = getBrowserEnumFromString(browserType);
@@ -54,7 +52,7 @@ public class SeleniumUtils {
 
     }
 
-    public static Browsers getBrowserEnumFromString (String browserType) {
+    public static Browsers getBrowserEnumFromString(String browserType) {
         for (Browsers browser : Browsers.values()) {
             if (browserType.equalsIgnoreCase(browser.toString()))
                 return browser;
@@ -63,11 +61,26 @@ public class SeleniumUtils {
         return null;
     }
 
-    public static WebElement waitForGenericElement (WebDriver driver , By by , int timeout) {
-        WebDriverWait wait = new WebDriverWait(driver , timeout);
+    public static WebElement waitForGenericElement(WebDriver driver, By by, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
         return wait.until(
                 ExpectedConditions.presenceOfElementLocated(by)
         );
+    }
+
+    public static String getElementMessage(WebDriver driver, By by) {
+        String message = "";
+        int retry = 0;
+        while (retry < 3) {
+            try {
+                WebElement element = SeleniumUtils.waitForGenericElement(driver, by, 15);
+                message = element.getText();
+                retry = 4;
+            } catch (ElementClickInterceptedException | NoSuchElementException e) {
+                retry++;
+            }
+        }
+        return message;
     }
 
 }
