@@ -2,20 +2,28 @@ package pageObjects;
 
 import com.sun.xml.bind.v2.model.core.ID;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.OtherUtils;
 import utils.SeleniumUtils;
+
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 public class LoginPage {
     private WebDriver driver;
     WebDriverWait wait;
 
+//@FindBy ( xpath = "//*[@id=\"cookie-monster\"]/div/div[2]/a")
+//WebElement cookieMess;
 
     @FindBy(id = "email")
     WebElement usernameInput;
@@ -42,7 +50,6 @@ public class LoginPage {
         usernameInput.sendKeys(username);
         passwordInput.clear();
         passwordInput.sendKeys(password);
-//        cookiesMess.click();
         Autentificare.submit();
 
 
@@ -52,8 +59,8 @@ public class LoginPage {
 //    }
 
 
-    public void initializeGeneralErrorElement() {
-        errGeneral = SeleniumUtils.waitForGenericElement(driver, By.xpath("/html/body/div[5]/div/div/div/div/form/div/div[2]/div"), 15);
+    public void initializeGeneralErrorElement ( ) {
+        errGeneral = SeleniumUtils.waitForGenericElement(driver , By.xpath("/html/body/div[5]/div/div/div/div/form/div/div[2]/div") , 15);
     }
 
 //    public boolean checkErr (String error , String type) {
@@ -69,20 +76,23 @@ public class LoginPage {
 
     public boolean checkErr (String error , String type) {
         if (type.equalsIgnoreCase("userErr"))
-            return OtherUtils.checkMessagePresentOnElement(errUserName, error);
+            return OtherUtils.checkMessagePresentOnElement(errUserName , error);
         else if (type.equalsIgnoreCase("passErr"))
-            return OtherUtils.checkMessagePresentOnElement(errPassword, error);
+            return OtherUtils.checkMessagePresentOnElement(errPassword , error);
         else if (type.equalsIgnoreCase("generalErr"))
-            return OtherUtils.checkMessagePresentOnElement(errGeneral, error);
+            return OtherUtils.checkMessagePresentOnElement(errGeneral , error);
 
-            return false;
-        }
+        return false;
+    }
 
 
     public void openLoginPage (String hostname) {
         System.out.println("Open the next url:" + hostname + "/customer/account/login/");
         driver.get(hostname + "/customer/account/login/");
+//                cookieMess.click();
 
 
-        }
     }
+//
+
+}
