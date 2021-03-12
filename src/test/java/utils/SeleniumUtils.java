@@ -16,11 +16,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 public class SeleniumUtils {
 
-    public static WebDriver getDriver(String browserType) {
+    public static WebDriver getDriver (String browserType) {
 
         WebDriver driver = null;
         Browsers browsers = getBrowserEnumFromString(browserType);
@@ -53,7 +52,7 @@ public class SeleniumUtils {
 
     }
 
-    public static Browsers getBrowserEnumFromString(String browserType) {
+    public static Browsers getBrowserEnumFromString (String browserType) {
         for (Browsers browser : Browsers.values()) {
             if (browserType.equalsIgnoreCase(browser.toString()))
                 return browser;
@@ -62,14 +61,14 @@ public class SeleniumUtils {
         return null;
     }
 
-    public static WebElement waitForGenericElement(WebDriver driver, By by, int timeout) {
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
+    public static WebElement waitForGenericElement (WebDriver driver , By by , int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver , timeout);
         return wait.until(
                 ExpectedConditions.presenceOfElementLocated(by)
         );
     }
 
-    public static boolean checkElementMessage(WebDriver driver, By by, String expectedError) {
+    public static boolean checkElementMessage (WebDriver driver , By by , String expectedError) {
         String message = "";
         int retry = 0;
         WebElement element;
@@ -78,7 +77,7 @@ public class SeleniumUtils {
                 if (expectedError.isEmpty())
                     element = driver.findElement(by);
                 else
-                    element = SeleniumUtils.waitForGenericElement(driver, by, 15);
+                    element = SeleniumUtils.waitForGenericElement(driver , by , 15);
                 message = element.getText();
                 return message.equals(expectedError);
             } catch (ElementClickInterceptedException | NoSuchElementException | TimeoutException e) {
@@ -91,5 +90,4 @@ public class SeleniumUtils {
         System.out.println("Element not found on page");
         return false;
     }
-
 }
