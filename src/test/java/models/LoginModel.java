@@ -41,4 +41,26 @@ public class LoginModel {
     public void setGeneralError (String generalError) {
         this.generalError = generalError;
     }
+
+    public LoginModel(){
+
+    }
+
+    public LoginModel (AccountModel account , String userError , String passwordError , String generalError) {
+        this.account = account;
+        this.userError = userError;
+        this.passwordError = passwordError;
+        this.generalError = generalError;
+    }
+    public LoginModel(String username, String password,String userError , String passwordError , String generalError){
+        AccountModel ac = new AccountModel();
+        ac.setUsername(username);
+        ac.setPassword(password);
+        this.account = ac;
+        this.account = account;
+        this.userError = userError;
+        this.passwordError = passwordError;
+        this.generalError = generalError;
+
+    }
 }

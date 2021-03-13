@@ -97,32 +97,32 @@ public class LoginPage {
 //        wait.until(ExpectedConditions.elementToBeClickable(Trimite));
 //    }
 
-//    public boolean checkErr (String error , String type) {
-//        if (type.equalsIgnoreCase("userErr"))
-//            return SeleniumUtils.checkElementMessage(driver, By.id("advice-required-entry-email"), error);
-//        else if (type.equalsIgnoreCase("passErr"))
-//            return SeleniumUtils.checkElementMessage(driver, By.id("advice-required-entry-pass"), error);
-//        else if (type.equalsIgnoreCase("generalErr"))
-//            return SeleniumUtils.checkElementMessage(driver, By.xpath("//li[contains(@class, 'error-msg')]/ul/li/span"), error);;
-//        return false;
+    public boolean checkErr (String error , String type) {
+        if (type.equalsIgnoreCase("userErr"))
+            return SeleniumUtils.checkElementMessage(driver , By.id("advice-required-entry-email") , error);
+        else if (type.equalsIgnoreCase("passErr"))
+            return SeleniumUtils.checkElementMessage(driver , By.id("advice-required-entry-pass") , error);
+        else if (type.equalsIgnoreCase("generalErr"))
+            return SeleniumUtils.checkElementMessage(driver , By.xpath("//li[contains(@class, 'error-msg')]/ul/li/span") , error);
+        ;
+        return false;
+    }
 
 
 //        String err = SeleniumUtils.getElementMessage(driver, By.xpath("//*[@id='login-form']/form/div/div[2]/div"));
 //        Assert.assertEquals(err, genErrMsg);
 
+
+
+//    public boolean checkErr(String error, String type) {
+//        if (type.equalsIgnoreCase("userErr"))
+//            return error.equals(errUserName.getText());
+//        else if (type.equalsIgnoreCase("passErr"))
+//            return error.equals(errPassword.getText());
+//        else if (type.equalsIgnoreCase("generalErr"))
+//            return error.equals(errGeneral.getText());
+//        return false;
 //    }
-
-
-    public boolean checkErr (String error , String type) {
-        if (type.equalsIgnoreCase("userErr"))
-            return OtherUtils.checkMessagePresentOnElement(errUserName , error);
-        else if (type.equalsIgnoreCase("passErr"))
-            return OtherUtils.checkMessagePresentOnElement(errPassword , error);
-        else if (type.equalsIgnoreCase("generalErr"))
-            return OtherUtils.checkMessagePresentOnElement(errGeneral , error);
-
-        return false;
-    }
 
 
     public void openLoginPage (String hostname) {

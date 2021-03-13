@@ -85,35 +85,39 @@ public class LoginUITest extends BaseUITest {
     }
 
     @DataProvider(name = "csvDp")
-    public Iterator<Object[]> csvDpCollection ( ) throws IOException {
+    public Iterator<Object[]> csvDpCollection() throws IOException {
         Collection<Object[]> dp = new ArrayList<>();
-        File f = new File("src\\test\\resources\\data\\testdata.csv");
+        File f = new File("src\\test\\resources\\data\\+login.csv");
         Reader reader = Files.newBufferedReader(Paths.get(f.getAbsolutePath()));
         CSVReader csvReader = new CSVReader(reader);
         List<String[]> csvData = csvReader.readAll();
         for (int i = 0; i < csvData.size(); i++) {
-            AccountModel ac = new AccountModel();
-            ac.setUsername(csvData.get(i)[0]);
-            ac.setPassword(csvData.get(i)[1]);
-            LoginModel lm = new LoginModel();
-            lm.setAccount(ac);
-            lm.setUserError(csvData.get(i)[2]);
-            lm.setPasswordError(csvData.get(i)[3]);
-            lm.setGeneralError(csvData.get(i)[4]);
-            dp.add(new Object[]{lm});
-
+//            AccountModel ac = new AccountModel();
+//            ac.setUsername(csvData.get(i)[0]);
+//            ac.setPassword(csvData.get(i)[1]);
+//            LoginModel lm = new LoginModel();
+//            lm.setAccount(ac);
+//            lm.setUserError(csvData.get(i)[2]);
+//            lm.setPasswordError(csvData.get(i)[3]);
+//            lm.setGeneralError(csvData.get(i)[4]);
+            //dp.add(new Object[]{ lm }); // is being replaced by the following line due to constructor
+            dp.add(new Object[]{new LoginModel(csvData.get(i)[0],
+                    csvData.get(i)[1],
+                    csvData.get(i)[2],
+                    csvData.get(i)[3],
+                    csvData.get(i)[4])});
         }
-
         return dp.iterator();
-
     }
+
+
 
     @Test(dataProvider = "csvDp")
-    public void csvTest (LoginModel lm) {
+    public void csvTest(LoginModel lm) {
         printData(lm);
         loginActions(lm);
-
     }
+
 
     @DataProvider(name = "xlsDp")
     public Iterator<Object[]> xlsDpCollection ( ) throws Exception {
@@ -129,7 +133,8 @@ public class LoginUITest extends BaseUITest {
             lm.setUserError(excelData[i][2]);
             lm.setPasswordError(excelData[i][3]);
             lm.setGeneralError(excelData[i][4]);
-            dp.add(new Object[]{lm});
+
+
 
 
         }
@@ -143,14 +148,15 @@ public class LoginUITest extends BaseUITest {
     }
 
     @DataProvider (name="sqlDp")
-    public Iterator<Object[]> sqlDpCollection ( )  {
+    public Iterator<Object[]> sqlDpCollection() {
         Collection<Object[]> dp = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema,dbUsername,dbPassword);
+                    "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema,
+                    dbUsername, dbPassword);
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM automation.authentication;");
-            while(results.next()){
+            while (results.next()) {
                 AccountModel am = new AccountModel();
                 am.setUsername(sanitizeNullDbString(results.getString("username")));
                 am.setPassword(sanitizeNullDbString(results.getString("password")));
@@ -161,14 +167,23 @@ public class LoginUITest extends BaseUITest {
                 lm.setGeneralError(sanitizeNullDbString(results.getString("generalError")));
                 dp.add(new Object[]{lm});
 
-            }
 
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+//                dp.add(new Object[]{new LoginModel(
+//                        results.sanitizeNullDbString(results.getString("username")),
+//                        results.sanitizeNullDbString(results.getString("password")),
+//                        results.sanitizeNullDbString(results.getString("userError")),
+//                        results.sanitizeNullDbString(results.getString("passwordError")),
+//                        results.sanitizeNullDbString(results.getString("generalError")),
+
         }
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return dp.iterator();
 
-        return dp.iterator();}
+    }
 
         @Test (dataProvider = "sqlDp")
         public void sqlTest(LoginModel lm) {
