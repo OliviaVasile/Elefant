@@ -16,7 +16,6 @@ public class OtherUtils {
     public static String sanitizeNullDbString(String dbResult){
         if(dbResult == null){
             return "" ;
-
         }
         return dbResult;
     }

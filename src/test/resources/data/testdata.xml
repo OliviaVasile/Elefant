@@ -1,9 +1,0 @@
-<loginModel>
-    <account>
-        <username>user1@user.ro</username>
-        <password>password1</password>
-    </account>
-    <userError/>
-    <passwordError/>
-    <generalError>Parola sau autentificare incorecta.</generalError>
-</loginModel>

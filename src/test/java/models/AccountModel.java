@@ -1,7 +1,10 @@
 package models;
 
-public class AccountModel {
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+
+public class AccountModel {
     private String username;
     private String password;
 
@@ -20,4 +23,6 @@ public class AccountModel {
     public void setPassword (String password) {
         this.password = password;
     }
+
+
 }

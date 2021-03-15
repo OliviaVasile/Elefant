@@ -3,7 +3,7 @@ package models;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+
 public class LoginModel {
     private AccountModel account;
     private String userError;
@@ -13,7 +13,7 @@ public class LoginModel {
     public AccountModel getAccount ( ) {
         return account;
     }
-@XmlElement
+
     public void setAccount (AccountModel account) {
         this.account = account;
     }
@@ -21,7 +21,7 @@ public class LoginModel {
     public String getUserError ( ) {
         return userError;
     }
-@XmlElement
+
     public void setUserError (String userError) {
         this.userError = userError;
     }
@@ -29,7 +29,7 @@ public class LoginModel {
     public String getPasswordError ( ) {
         return passwordError;
     }
-@XmlElement
+
     public void setPasswordError (String passwordError) {
         this.passwordError = passwordError;
     }
@@ -37,12 +37,12 @@ public class LoginModel {
     public String getGeneralError ( ) {
         return generalError;
     }
-@XmlElement
+
     public void setGeneralError (String generalError) {
         this.generalError = generalError;
     }
 
-    public LoginModel(){
+    public LoginModel ( ) {
 
     }
 
@@ -52,12 +52,12 @@ public class LoginModel {
         this.passwordError = passwordError;
         this.generalError = generalError;
     }
-    public LoginModel(String username, String password,String userError , String passwordError , String generalError){
+
+    public LoginModel (String username , String password , String userError , String passwordError , String generalError) {
         AccountModel ac = new AccountModel();
         ac.setUsername(username);
         ac.setPassword(password);
         this.account = ac;
-        this.account = account;
         this.userError = userError;
         this.passwordError = passwordError;
         this.generalError = generalError;

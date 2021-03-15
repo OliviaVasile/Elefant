@@ -1,15 +1,15 @@
 package models;
 
 public class RegisterModel {
-    private String Prenume;
-    private String Nume;
-    private String Judet;
-    private String Oras;
-    private String Adresa;
-    private String Telefon;
-    private String Email;
-    private String Parola;
-    private String ConfParola;
+    private String prenume;
+    private String nume;
+    private String judet;
+    private String oras;
+    private String adresa;
+    private String telefon;
+    private String email;
+    private String parola;
+    private String confParola;
     private String eroareNume;
     private String eroarePrenume;
     private String eroareJudet;
@@ -20,30 +20,31 @@ public class RegisterModel {
     private String eroareParola;
     private String eroareConfParola;
 
-    public RegisterModel(){
+    public RegisterModel ( ) {
 
     }
-    public RegisterModel(String Prenume,String Nume, String Judet, String Oras,
-                         String Adresa,String Telefon,String Email,
-                         String Parola,String ConfParola, String eroareNume,
-                         String eroarePrenume, String eroareJudet,String eroareOras,
-                         String eroareAdresa,String eroareTelefon,String eroareEmail,
-                         String eroareParola,String eroareConfParola){
+
+    public RegisterModel (String prenume , String nume , String judet , String oras ,
+                          String adresa , String telefon , String email ,
+                          String parola , String confParola , String eroareNume ,
+                          String eroarePrenume , String eroareJudet , String eroareOras ,
+                          String eroareAdresa , String eroareTelefon , String eroareEmail ,
+                          String eroareParola , String eroareConfParola) {
 
 
-        this.Prenume = Prenume;
-        this.Nume = Nume;
-        this.Judet = Judet;
-        this.Oras = Oras;
-        this.Adresa = Adresa;
-        this.Telefon = Telefon;
-        this.Email = Email;
-        this.Parola = Parola;
-        this.ConfParola = ConfParola;
+        this.prenume = prenume;
+        this.nume = nume;
+        this.judet = judet;
+        this.oras = oras;
+        this.adresa = adresa;
+        this.telefon = telefon;
+        this.email = email;
+        this.parola = parola;
+        this.confParola = confParola;
         this.eroareNume = eroareNume;
         this.eroarePrenume = eroarePrenume;
         this.eroareJudet = eroareJudet;
-        this.eroareOras = eroareJudet;
+        this.eroareOras = eroareOras;
         this.eroareAdresa = eroareAdresa;
         this.eroareTelefon = eroareTelefon;
         this.eroareEmail = eroareEmail;
@@ -53,75 +54,75 @@ public class RegisterModel {
     }
 
     public String getPrenume ( ) {
-        return Prenume;
+        return prenume;
     }
 
     public void setPrenume (String prenume) {
-        Prenume = prenume;
+        this.prenume = prenume;
     }
 
     public String getNume ( ) {
-        return Nume;
+        return nume;
     }
 
     public void setNume (String nume) {
-        Nume = nume;
+        this.nume = nume;
     }
 
     public String getJudet ( ) {
-        return Judet;
+        return judet;
     }
 
     public void setJudet (String judet) {
-        Judet = judet;
+        this.judet = judet;
     }
 
     public String getOras ( ) {
-        return Oras;
+        return oras;
     }
 
     public void setOras (String oras) {
-        Oras = oras;
+        this.oras = oras;
     }
 
     public String getAdresa ( ) {
-        return Adresa;
+        return adresa;
     }
 
     public void setAdresa (String adresa) {
-        Adresa = adresa;
+        this.adresa = adresa;
     }
 
     public String getTelefon ( ) {
-        return Telefon;
+        return telefon;
     }
 
     public void setTelefon (String telefon) {
-        Telefon = telefon;
+        this.telefon = telefon;
     }
 
     public String getEmail ( ) {
-        return Email;
+        return email;
     }
 
     public void setEmail (String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getParola ( ) {
-        return Parola;
+        return parola;
     }
 
     public void setParola (String parola) {
-        Parola = parola;
+        this.parola = parola;
     }
 
     public String getConfParola ( ) {
-        return ConfParola;
+        return confParola;
     }
 
     public void setConfParola (String confParola) {
-        ConfParola = confParola;
+        this.confParola = confParola;
     }
 
     public String getEroareNume ( ) {

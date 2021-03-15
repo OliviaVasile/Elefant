@@ -19,7 +19,8 @@ public class BaseUITest {
     String dbPassword;
 
     @BeforeClass
-    public void setUp(){String browserType = null;
+    public void setUp ( ) {
+        String browserType = null;
         //Method 1 -D cmd line parameters
         System.out.println(System.getProperty("browser"));
         browserType = System.getProperty("browser");
@@ -47,7 +48,7 @@ public class BaseUITest {
             System.out.println("Using DB schema" + dbSchema);
             dbUsername = prop.getProperty("dbUsername");
             dbPassword = prop.getProperty("dbPassword");
-            System.out.println("Using DB credentials " + dbUsername + dbPassword );
+            System.out.println("Using DB credentials " + dbUsername + dbPassword);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -56,7 +57,7 @@ public class BaseUITest {
 
 
     @AfterClass
-    public void CleanUp(){
+    public void CleanUp ( ) {
         System.out.println("Close driver at end of class test");
         driver.quit();
     }

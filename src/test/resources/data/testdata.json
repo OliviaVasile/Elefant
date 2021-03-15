@@ -1,9 +1,0 @@
-{
-  "account": {
-    "username": "user1@user.ro",
-    "password": "password1"
-  },
-  "userError": "",
-  "passwordError": "",
-  "generalError": "Parola sau autentificare incorecta."
-}

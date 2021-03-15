@@ -1,13 +1,11 @@
 package tests;
 
 import com.opencsv.CSVReader;
-import models.AccountModel;
-import models.LoginModel;
 import models.RegisterModel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pageObjects.RegisterPage;
+import pageObject.RegisterPage;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,20 +25,12 @@ public class RegisterUITest extends BaseUITest {
     @DataProvider(name = "csvDp")
     public Iterator<Object[]> csvDpCollection() throws IOException {
         Collection<Object[]> dp = new ArrayList<>();
-        File f = new File("src\\test\\resources\\data\\-register.csv");
+        File f = new File("src\\test\\resources\\data\\registerNeg.csv");
         Reader reader = Files.newBufferedReader(Paths.get(f.getAbsolutePath()));
         CSVReader csvReader = new CSVReader(reader);
         List<String[]> csvData = csvReader.readAll();
         for (int i = 0; i < csvData.size(); i++) {
-//            AccountModel ac = new AccountModel();
-//            ac.setUsername(csvData.get(i)[0]);
-//            ac.setPassword(csvData.get(i)[1]);
-//            LoginModel lm = new LoginModel();
-//            lm.setAccount(ac);
-//            lm.setUserError(csvData.get(i)[2]);
-//            lm.setPasswordError(csvData.get(i)[3]);
-//            lm.setGeneralError(csvData.get(i)[4]);
-            //dp.add(new Object[]{ lm }); // is being replaced by the following line due to constructor
+
             dp.add(new Object[]{new RegisterModel(
                     csvData.get(i)[0],
                     csvData.get(i)[1],
@@ -61,15 +51,10 @@ public class RegisterUITest extends BaseUITest {
                     csvData.get(i)[16],
                     csvData.get(i)[17])});
 
-
         }
         return dp.iterator();
     }
-    @Test(dataProvider = "csvDp")
-    public void csvTest(RegisterModel rm) {
-        printData(rm);
-        registerActions(rm);
-    }
+
 
     @DataProvider (name="sqlDp")
     public Iterator<Object[]> sqlDpCollection() {
@@ -92,7 +77,6 @@ public class RegisterUITest extends BaseUITest {
                 rm.setParola(sanitizeNullDbString(results.getString("parola")));
                 rm.setConfParola(sanitizeNullDbString(results.getString("parola2")));
 
-
                 dp.add(new Object[]{rm});
 
 
@@ -113,13 +97,6 @@ public class RegisterUITest extends BaseUITest {
 
     }
 
-    @Test (dataProvider = "sqlDp")
-    public void sqlTest(RegisterModel rm) {
-
-        printData(rm);
-        registerActions(rm);
-
-    }
 
     private void printData (RegisterModel rm) {
         System.out.println(rm.getPrenume());
@@ -158,17 +135,19 @@ public class RegisterUITest extends BaseUITest {
         Assert.assertTrue(rp.checkErr(rm.getEroareParola(), "parolaErr"));
         Assert.assertTrue(rp.checkErr(rm.getEroareConfParola(), "confParolaErr"));
 
-
-
-
-//        Assert.assertTrue(lp.checkErr(lm.getGeneralError(), "generalErr"));
-//        Assert.assertTrue(lp.checkErr(lm.getUserError(), "userErr"));
-//        Assert.assertTrue(lp.checkErr(lm.getPasswordError(), "passErr"));
-
     }
 
+    @Test(dataProvider = "csvDp")
+    public void csvTest(RegisterModel rm) {
+        printData(rm);
+        registerActions(rm);
+    }
+    @Test (dataProvider = "sqlDp")
+    public void sqlTest(RegisterModel rm) {
 
+        printData(rm);
+        registerActions(rm);
 
-
+    }
 
 }
