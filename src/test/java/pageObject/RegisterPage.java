@@ -100,6 +100,28 @@ public class RegisterPage {
 //        waitForRegisterPage();
 
     }
+//
+//    public boolean checkErr (String error , String type) {
+//        if (type.equalsIgnoreCase("fnErr"))
+//            return error.equals(fnErrMsg.getText());
+//        else if (type.equalsIgnoreCase("lnErr"))
+//            return error.equals(lnErrMsg.getText());
+//        else if (type.equalsIgnoreCase("judetErr"))
+//            return error.equals(judetErrMsg.getText());
+//        else if (type.equalsIgnoreCase("orasErr"))
+//            return error.equals(orasErrMsg.getText());
+//        else if (type.equalsIgnoreCase("adresaErr"))
+//            return error.equals(stradaErrMsg.getText());
+//        else if (type.equalsIgnoreCase("telefonErr"))
+//            return error.equals(telefErrMsg.getText());
+//        else if (type.equalsIgnoreCase("emailErr"))
+//            return error.equals(emailErrMsg.getText());
+//        else if (type.equalsIgnoreCase("parolaErr"))
+//            return error.equals(parolaErrMsg.getText());
+//        else if (type.equalsIgnoreCase("confParolaErr"))
+//            return error.equals(parola2ErrMsg.getText());
+//        return false;
+//    }
 
 
     public boolean checkErr (String error , String type) {

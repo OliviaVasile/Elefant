@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageObject.RegisterPage;
+import utils.SeleniumUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -125,7 +126,9 @@ public class RegisterUITest extends BaseUITest {
         rp.register(rm.getPrenume(), rm.getNume(), rm.getJudet(), rm.getOras(),
                 rm.getAdresa(), rm.getTelefon(),
                 rm.getEmail(), rm.getParola() , rm.getConfParola());
+
         Assert.assertTrue(rp.checkErr(rm.getEroarePrenume(), "fnErr"));
+
         Assert.assertTrue(rp.checkErr(rm.getEroareNume(), "lnErr"));
         Assert.assertTrue(rp.checkErr(rm.getEroareJudet(), "judetErr"));
         Assert.assertTrue(rp.checkErr(rm.getEroareOras(), "orasErr"));

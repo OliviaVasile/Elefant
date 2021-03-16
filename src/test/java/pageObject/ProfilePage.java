@@ -44,6 +44,7 @@ public class ProfilePage {
         if (driver.getCurrentUrl().equals("https://www.delimano.ro/customer/account/")) {
             return false;
         }
+        System.out.println("Ai iesit din cont");
         return true;
     }
 
