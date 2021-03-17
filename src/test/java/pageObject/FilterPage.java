@@ -12,26 +12,32 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.SeleniumUtils;
 
+import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FilterPage {
-    private WebDriver driver;
+    WebDriver driver;
     WebDriverWait wait;
 
 
-    //span[contains(text(),'Electrocasnice bucătărie')]
     @FindBy(how = How.XPATH, using = "//span[contains(text(),'Electrocasnice bucătărie')]")
     WebElement electrocasnice;
-    @FindBy(how = How.XPATH, using = "//li[@class='cat_sb 6621 position1']//ul//li//a[@class=' level1 '][normalize-space()='Aparate pentru Mic Dejun']")
+//    @FindBy(how = How.ID, using ="//*[@id=\"footerJsContainer\"]")
+//            WebElement container;
+    @FindBy(how = How.XPATH, using = "//*[@id=\"narrow-by-list2\"]/dd/ol/li[1]/a")
     WebElement micdejun;
     @FindBy(how = How.XPATH, using = "//*[@id=\"narrow-by-list\"]/li[2]/label")
     WebElement marca;
     @FindBy(how = How.XPATH, using = "//div[@class='top-filters']//p[@class='amount'][normalize-space()='7 Articol(e)']")
     WebElement noOfItems;
 
-    @FindBy(how = How.XPATH, using = "//li[@class='level0 nav-2 active parent']//ul[@class='level0']")
-    WebElement meniu;
+    public FilterPage (WebDriver driver) {
+        this.driver = driver;
+        wait = new WebDriverWait(driver , 5);
+        PageFactory.initElements(this.driver , this);
+
+    }
 
 
     public void openFilterPage (String hostname) {
@@ -40,21 +46,24 @@ public class FilterPage {
     }
 
 
-    public String filter ( ) {
-        Actions act = new Actions(driver);
+    public String filterResults ( ) {
+//        Actions act = new Actions(driver);
 
-        wait.until(ExpectedConditions.elementToBeClickable(electrocasnice));
-        act.moveToElement(electrocasnice).build().perform();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(),'Electrocasnice bucătărie')]")));
+
+        electrocasnice.click();
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"footerJsContainer\"]")));
+//        act.moveToElement(container);
 
         wait.until(ExpectedConditions.elementToBeClickable(micdejun));
-        act.moveToElement(micdejun);
+//        act.moveToElement(micdejun);
 
         micdejun.click();
 
         wait.until(ExpectedConditions.elementToBeClickable(marca));
         marca.click();
         WebElement delimano = driver.findElement(By.xpath("//article[@class='ac-small']//a[contains(text(),'Delimano')]"));
-        wait.until(ExpectedConditions.elementToBeClickable(delimano));
+      wait.until(ExpectedConditions.elementToBeClickable(delimano));
         delimano.click();
 
         System.out.println("Rezultatul afisat este:" + noOfItems.getText());
@@ -71,15 +80,6 @@ public class FilterPage {
 
         return String.valueOf(data.size());
     }
-
-
-    public FilterPage (WebDriver driver) {
-        this.driver = driver;
-        wait = new WebDriverWait(driver , 10);
-        PageFactory.initElements(this.driver , this);
-//
-    }
-
 
 }
 

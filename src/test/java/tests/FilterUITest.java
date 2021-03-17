@@ -23,7 +23,8 @@ public class FilterUITest extends BaseUITest {
     public void Filter ( ) {
         FilterPage fp = new FilterPage(driver);
         fp.openFilterPage(hostname);
-        Assert.assertEquals(fp.filter() , fp.numberOfProducts());
+        fp.filterResults();
+        Assert.assertEquals(fp.filterResults() , fp.numberOfProducts());
     }
 
 }

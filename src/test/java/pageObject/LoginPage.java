@@ -57,9 +57,9 @@ public class LoginPage {
 
     }
 
-    public void waitForLoginPage ( ) {
-        wait.until(ExpectedConditions.elementToBeClickable(autentificare));
-    }
+//    public void waitForLoginPage ( ) {
+//        wait.until(ExpectedConditions.elementToBeClickable(autentificare));
+//    }
 //    public WebElement fluentWait (final By locator) {
 //        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
 //                .withTimeout(10 , TimeUnit.SECONDS)

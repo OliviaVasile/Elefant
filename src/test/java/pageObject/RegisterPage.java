@@ -127,13 +127,18 @@ public class RegisterPage {
     public boolean checkErr (String error , String type) {
         if (type.equalsIgnoreCase("fnErr"))
             return SeleniumUtils.checkElementMessage(driver , By.id("advice-required-entry-firstname") , error);
+        //div[@id='advice-required-entry-firstname']
         else if (type.equalsIgnoreCase("lnErr"))
+            //div[@id='advice-required-entry-lastname']
             return SeleniumUtils.checkElementMessage(driver , By.id("advice-required-entry-lastname") , error);
         else if (type.equalsIgnoreCase("judetErr"))
+            //div[@id='advice-required-entry-region']
             return SeleniumUtils.checkElementMessage(driver , By.id("advice-required-entry-region") , error);
         else if (type.equalsIgnoreCase("orasErr"))
+            //div[@id='advice-required-entry-city']
             return SeleniumUtils.checkElementMessage(driver , By.id("advice-required-entry-city") , error);
         else if (type.equalsIgnoreCase("adresaErr"))
+            //div[@id='advice-required-entry-street1']
             return SeleniumUtils.checkElementMessage(driver , By.id("advice-required-entry-street1") , error);
         else if (type.equalsIgnoreCase("telefonErr"))
             return SeleniumUtils.checkElementMessage(driver , By.id("advice-required-entry-telephoneCustom") , error);

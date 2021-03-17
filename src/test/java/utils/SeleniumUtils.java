@@ -19,6 +19,7 @@ import java.util.Map;
 
 public class SeleniumUtils {
 
+
     public static WebDriver getDriver(String browserType) {
 
         WebDriver driver = null;
@@ -94,5 +95,7 @@ public class SeleniumUtils {
         } else
             return true;
     }
+
+
 
 }
