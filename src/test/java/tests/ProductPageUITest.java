@@ -1,13 +1,11 @@
 package tests;
 
 import com.opencsv.CSVReader;
-import models.LoginModel;
 import models.ProductModel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pageObject.FilterPage;
-import pageObject.ViewProduct;
+import pageObject.ProductPage;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +17,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class ViewProductUITest extends BaseUITest {
+public class ProductPageUITest extends BaseUITest {
 
     @DataProvider(name = "csvDp")
     public Iterator<Object[]> csvDpCollection ( ) throws IOException {
@@ -39,8 +37,8 @@ public class ViewProductUITest extends BaseUITest {
     @Test(dataProvider = "csvDp")
     public void testViewProduct (ProductModel pm ) {
 
-        ViewProduct vp = new ViewProduct(driver);
-        vp.openViewPage(hostname);
+        ProductPage vp = new ProductPage(driver);
+        vp.openProductPage(hostname);
         vp.openProduct();
 
         Assert.assertEquals( pm.getProduct(), vp.openProduct() );

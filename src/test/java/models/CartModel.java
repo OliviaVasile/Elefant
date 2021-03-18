@@ -4,6 +4,7 @@ public class CartModel {
     private String qty;
     private String mesaj;
 
+
     public CartModel ( ) {
 
     }
@@ -11,6 +12,7 @@ public class CartModel {
     public CartModel (String keyword , String result) {
         this.qty = qty;
         this.mesaj = mesaj;
+
     }
 
     public String getQty ( ) {
@@ -28,4 +30,6 @@ public class CartModel {
     public void setMesaj (String mesaj) {
         this.mesaj = mesaj;
     }
+
+
 }

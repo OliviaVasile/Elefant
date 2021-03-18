@@ -54,7 +54,7 @@ public class SearchPage {
 
         boolean visible = driver.findElement(By.id("notfoundtext")).isDisplayed();
         boolean result = !visible;
-        System.out.println(result);
+        System.out.println("textul ca nu s-au gasit produse nu se afla in pagina? " + result);
         return result;
     }
 }

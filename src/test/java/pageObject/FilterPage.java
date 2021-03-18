@@ -34,7 +34,7 @@ public class FilterPage {
 
     public FilterPage (WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver , 5);
+        wait = new WebDriverWait(driver , 15);
         PageFactory.initElements(this.driver , this);
 
     }
