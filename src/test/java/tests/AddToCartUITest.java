@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import pageObject.CartPage;
 import pageObject.ProductPage;
 import pageObject.SearchPage;
+import utils.SeleniumUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,51 +25,69 @@ import java.util.List;
 
 import static utils.OtherUtils.sanitizeNullDbString;
 
-public class AddToCartUITest extends BaseUITest{
+public class AddToCartUITest extends BaseUITest {
 
     private void printData (CartModel cm) {
 
         System.out.println(cm.getMesaj());
 
     }
+
     private void printQData (CartModel cm) {
         System.out.println(cm.getQty());
         System.out.println(cm.getMesaj());
 
     }
-
+//validate that "Aparat pentru clătite Joy a fost adaugat in cos." message is presen
     private void addCartActions (CartModel cm) {
         CartPage cp = new CartPage(driver);
         ProductPage pp = new ProductPage(driver);
+//        cp.openCart(hostname);
+//        cp.deleteCart();
         pp.openProductPage(hostname);
         pp.addToCart(cm.getMesaj());
         Assert.assertTrue(cp.verifyElementPresent());
         Assert.assertEquals(cm.getMesaj() , cp.getResult());
+        cp.deleteCart();
+        //        Assert.assertEquals(pp.productTitle(), cp.productTitle());
+//        Assert.assertTrue(cp.checkContinuaAfterDeleteCart());
     }
 
+//validate that "Aparat pentru clătite Joy a fost adaugat in cos." message is present;
+//validate that qty inserted in product page is the same with the resulted qty from cart page
     private void addCartQActions (CartModel cm) {
         CartPage cp = new CartPage(driver);
         ProductPage pp = new ProductPage(driver);
+        pp.openProductPage(hostname);
+
 
         pp.addQToCart(cm.getQty() , cm.getMesaj());
         Assert.assertTrue(cp.verifyElementPresent());
         Assert.assertEquals(cm.getMesaj() , cp.getResult());
         Assert.assertEquals(cm.getQty() , cp.numberOfProducts());
-//        Assert.assertEquals(pp.productTitle(), cp.productTitle());
+
+        cp.deleteCart();
+        //        Assert.assertEquals(pp.productTitle(), cp.productTitle());
+//        Assert.assertTrue(cp.checkContinuaAfterDeleteCart());
     }
 
+    //validate that "Aparat pentru clătite Joy a fost adaugat in cos." message is present;
+//validate that by clicking once "+" the qty from cart page is inserted qty in the product page + 1
     private void addCartPlusActions (CartModel cm) {
         CartPage cp = new CartPage(driver);
         ProductPage pp = new ProductPage(driver);
+        pp.openProductPage(hostname);
 
-        pp.addPlusCart();
+        pp.addPlusCart(cm.getQty() , cm.getMesaj());
         Assert.assertTrue(cp.verifyElementPresent());
         Assert.assertEquals(cm.getMesaj() , cp.getResult());
         Assert.assertEquals(java.util.Optional.of(Integer.valueOf(cm.getQty()) + 1) , java.util.Optional.of(cp.numberOfProductsAfterPlus()));
+        cp.deleteCart();
 //        Assert.assertEquals(pp.productTitle(), cp.productTitle());
+//        Assert.assertTrue(cp.checkContinuaAfterDeleteCart());
     }
 
-        @DataProvider(name = "csvDp")
+    @DataProvider(name = "csvDp")
     public Iterator<Object[]> csvDp1Collection ( ) throws IOException {
         Collection<Object[]> dp = new ArrayList<>();
         File f = new File("src\\test\\resources\\data\\adCart.csv");
@@ -82,7 +101,6 @@ public class AddToCartUITest extends BaseUITest{
         }
         return dp.iterator();
     }
-
 
 
     @DataProvider(name = "sqlDp")
@@ -117,22 +135,22 @@ public class AddToCartUITest extends BaseUITest{
 //
 //    }
 
-    @Test (dataProvider = "sqlDp")
-    public void addToCart (CartModel cm){
+    @Test(dataProvider = "sqlDp")
+    public void addToCart (CartModel cm) {
         printData(cm);
         addCartActions(cm);
 
     }
 
-    @Test (dataProvider = "sqlDp")
-    public void addQToCart (CartModel cm){
+    @Test(dataProvider = "sqlDp")
+    public void addQToCart (CartModel cm) {
         printQData(cm);
         addCartQActions(cm);
 
     }
 
-    @Test (dataProvider = "sqlDp")
-    public void addPlusToCart (CartModel cm){
+    @Test(dataProvider = "sqlDp")
+    public void addPlusToCart (CartModel cm) {
 
         addCartPlusActions(cm);
 

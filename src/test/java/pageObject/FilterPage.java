@@ -77,7 +77,6 @@ public class FilterPage {
 
         List<WebElement> data = driver.findElements(By.className("view-prod"));
         System.out.println("total number of products  == " + data.size());
-
         return String.valueOf(data.size());
     }
 

@@ -61,6 +61,8 @@ public class LogoutUITest extends BaseUITest {
         }
         return dp1.iterator();
     }
+//verify url after logout ! "https://www.delimano.ro/customer/account/";
+    //validate that backing after logout does not redirect the user into acount
 
     public void logoutActions(LoginModel lm){
         LoginPage lp = new LoginPage(driver);

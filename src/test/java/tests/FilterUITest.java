@@ -19,11 +19,12 @@ import java.util.List;
 
 public class FilterUITest extends BaseUITest {
 
+    //validate that the number of displayed results is the same with the number of displayed products
+
     @Test
     public void Filter ( ) {
         FilterPage fp = new FilterPage(driver);
         fp.openFilterPage(hostname);
-        fp.filterResults();
         Assert.assertEquals(fp.filterResults() , fp.numberOfProducts());
     }
 

@@ -140,11 +140,11 @@ public class RegisterUITest extends BaseUITest {
 
     }
 
-    @Test(dataProvider = "csvDp")
-    public void csvTest(RegisterModel rm) {
-        printData(rm);
-        registerActions(rm);
-    }
+//    @Test(dataProvider = "csvDp")
+//    public void csvTest(RegisterModel rm) {
+//        printData(rm);
+//        registerActions(rm);
+//    }
     @Test (dataProvider = "sqlDp")
     public void sqlTest(RegisterModel rm) {
 

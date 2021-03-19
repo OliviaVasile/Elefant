@@ -33,15 +33,13 @@ public class ProductPageUITest extends BaseUITest {
         return dp.iterator();
     }
 
-
+//validate that the product title from products list is the same with the product title from product page
     @Test(dataProvider = "csvDp")
-    public void testViewProduct (ProductModel pm ) {
+    public void testViewProduct (ProductModel pm ) throws InterruptedException {
 
-        ProductPage vp = new ProductPage(driver);
-        vp.openProductPage(hostname);
-        vp.openProduct();
-
-        Assert.assertEquals( pm.getProduct(), vp.openProduct() );
+        ProductPage pp = new ProductPage(driver);
+        pp.openProductPage(hostname);
+        Assert.assertEquals( pm.getProduct(), pp.openProduct() );
 //        Assert.assertEquals(vp.titleProduct(), vp.openProduct());
 
     }

@@ -30,6 +30,8 @@ public class SearchPage {
         PageFactory.initElements(this.driver , this);
     }
 
+
+
     public void openSearchPage (String hostname) {
         System.out.println("Open the next url:" + hostname);
         driver.get(hostname);
@@ -49,6 +51,7 @@ public class SearchPage {
 //        wait.until(ExpectedConditions.elementToBeClickable(noResult)).click();
 
     }
+
 
     public boolean verifyElementAbsent ( ){
 

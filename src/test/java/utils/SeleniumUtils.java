@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SeleniumUtils {
@@ -96,6 +97,20 @@ public class SeleniumUtils {
             return true;
     }
 
+    public static Integer turnToInteger(String s){
 
+        int is = Integer.valueOf(s);
+
+        System.out.println("cantitatea este " + is);
+        return is;
+
+
+    }
+public static void jsExecute(WebDriver driver, By by) {
+    WebElement ele = driver.findElement(by);
+    JavascriptExecutor jse = (JavascriptExecutor) driver;
+    jse.executeScript("arguments[0].click()" , ele);
+
+}
 
 }

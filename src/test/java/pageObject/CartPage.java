@@ -1,15 +1,15 @@
 package pageObject;
 
+import models.CartModel;
 import org.apache.bcel.generic.Select;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
 import utils.SeleniumUtils;
 
 public class CartPage {
@@ -18,6 +18,12 @@ public class CartPage {
 
     @FindBy(how = How.ID, using = "qty")
     WebElement number;
+    @FindBy(how = How.XPATH, using = "//*[@id=\"updateForm\"]/div[2]/div[1]/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div[3]/ul/li/a")
+    WebElement deleteCart;
+    @FindBy(how = How.XPATH, using = "//input[@id='minus1']")
+    WebElement minus;
+    @FindBy(how = How.XPATH, using = "//li[@class='method-checkout-cart-methods-onepage-bottom']//button[@title='Continuă']")
+    WebElement continuaButton;
 
     By succes = By.xpath("//span[contains(text(),'Aparat pentru clătite Joy a fost adaugat in cos.')]");
 
@@ -29,7 +35,7 @@ public class CartPage {
 
     public void openCart (String hostname) {
         System.out.println("Open the next url:" + hostname);
-        driver.get(hostname);
+        driver.get(hostname + "/checkout/cart/");
 
     }
 
@@ -38,38 +44,61 @@ public class CartPage {
 
     }
 
-    public boolean verifyElementPresent ( ){
+    public boolean verifyElementPresent ( ) {
         driver.findElement(By.xpath("//span[contains(text(),'Aparat pentru clătite Joy a fost adaugat in cos.')]"));
         return true;
     }
 
-    public String numberOfProducts(){
+    public String numberOfProducts ( ) {
 
-        String result = driver.findElement(By.xpath("//input[@id='qty']")).getAttribute("value");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("qty")));
+
+        String result = driver.findElement(By.id("qty")).getAttribute("value");
         System.out.println("cantitatea este " + result);
         return result;
 
     }
-//int iTest = Integer.valueOf(strTest);
 
-    public Integer numberOfProductsAfterPlus(){
 
-        String result = driver.findElement(By.xpath("//input[@id='qty']")).getAttribute("value");
-        int iresult = Integer.valueOf(result);
-        System.out.println("cantitatea este " + iresult);
-        return iresult;
+    public Integer numberOfProductsAfterPlus ( ) {
+
+        return SeleniumUtils.turnToInteger(numberOfProducts());
 
     }
 
-    public String productTitle(){
+    public void deleteCart ( ) {
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='cart-desktop']//a[@title='Vizualizare rapida'][contains(text(),'Aparat pentru clătite Joy')]")));
 
-        String result = driver.findElement(By.xpath("//div[@class='cart-desktop']//a[@title='Vizualizare rapida'][contains(text(),'Aparat pentru clătite Joy')]")).getText();
-        return result ;
+        wait.until((ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"updateForm\"]/div[2]/div[1]/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div[3]/ul/li/a"))));
+//    continue_button.click()
+//    WebElement delete = driver.findElement(By.xpath("ul[class ='cart-links']/ul/li/a/span"));
+//        Actions actions = new Actions(driver);
+//        actions.moveToElement(delete);
+        deleteCart.click();
+//   SeleniumUtils.jsExecute(driver,By.xpath("a[title='Sterge'] span"));
+
+    }
+
+    public boolean checkContinuaAfterDeleteCart ( ) throws Exception {
+
+        try {
+            driver.findElement(By.xpath("//li[@class='method-checkout-cart-methods-onepage-bottom']//button[@title='Continuă']")).isDisplayed();
+
+            return false;
+        } catch (NoSuchElementException e) {
+            return true;
+
+        }
+    }
+
+    public void spreCheckout ( ) {
+        Actions actions = new Actions(driver);
+//        actions.moveToElement(continuaButton).click().build().perform();
+//        SeleniumUtils.jsExecute(driver , By.xpath("//li[@class='method-checkout-cart-methods-onepage-bottom']//button[@title='Continuă']"));
 
     }
 
 }
+
 
 

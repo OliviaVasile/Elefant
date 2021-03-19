@@ -45,20 +45,24 @@ public class SearchUITest extends BaseUITest {
         System.out.println(sm.getResult());
 
     }
-
+    //validate that "Ne pare rău, dar nu au fost găsite rezultate care să corespundă termenilor dvs.
+// de căutare. Vă rugăm să verificați ortografia sau să adăugați un cuvânt alternativ.
+// De asemenea, puteți verifica produsele de mai jos care v-ar putea interesa." message is present on page
     private void searchNegativeActions (SearchModel sm) {
         SearchPage sp = new SearchPage(driver);
         sp.openSearchPage(hostname);
         sp.search(sm.getKeyword() , sm.getResult());
         Assert.assertEquals(sm.getResult() , sp.getResult());
     }
-
+//not present on page
     private void printPositiveData (SearchModel sm) {
         System.out.println(sm.getKeyword());
 
     }
 
-    private void searchPositiveActions (SearchModel sm) throws Exception {
+
+
+    private void searchPositiveActions (SearchModel sm)  {
         SearchPage sp = new SearchPage(driver);
         sp.openSearchPage(hostname);
         sp.search(sm.getKeyword() , sm.getResult());
@@ -112,14 +116,18 @@ public class SearchUITest extends BaseUITest {
     }
 
 
+
     @Test(dataProvider = "sqlDp")
     public void searchNegative (SearchModel sm) {
         printNegativeData(sm);
         searchNegativeActions(sm);
     }
 
+    //validate that "Ne pare rău, dar nu au fost găsite rezultate care să corespundă termenilor dvs.
+// de căutare. Vă rugăm să verificați ortografia sau să adăugați un cuvânt alternativ.
+// De asemenea, puteți verifica produsele de mai jos care v-ar putea interesa." message is not present
     @Test(dataProvider = "sqlDp1")
-    public void searchPositive (SearchModel sm) throws Exception {
+    public void searchPositive (SearchModel sm) {
         printPositiveData(sm);
         searchPositiveActions(sm);
     }
