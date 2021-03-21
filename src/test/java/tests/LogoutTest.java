@@ -1,10 +1,7 @@
 package tests;
 
 import com.opencsv.CSVReader;
-import models.AccountModel;
-import models.LoginModel;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import models.loginModel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,7 +18,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class LogoutUITest extends BaseUITest {
+public class LogoutTest extends BaseTest {
 
 //    @Test(dataProvider = "csvDp1")
 //    public void logout (LoginModel lm) {
@@ -52,7 +49,7 @@ public class LogoutUITest extends BaseUITest {
         List<String[]> csvData = csvReader.readAll();
         for (int i = 0; i < csvData.size(); i++) {
 
-            dp1.add(new Object[]{new LoginModel(csvData.get(i)[0] ,
+            dp1.add(new Object[]{new loginModel(csvData.get(i)[0] ,
                     csvData.get(i)[1] ,
                     csvData.get(i)[2] ,
                     csvData.get(i)[3] ,
@@ -64,7 +61,7 @@ public class LogoutUITest extends BaseUITest {
 //verify url after logout ! "https://www.delimano.ro/customer/account/";
     //validate that backing after logout does not redirect the user into acount
 
-    public void logoutActions(LoginModel lm){
+    public void logoutActions(loginModel lm){
         LoginPage lp = new LoginPage(driver);
         lp.openLoginPage(hostname);
         lp.login(lm.getAccount().getUsername() , lm.getAccount().getPassword());
@@ -77,7 +74,7 @@ public class LogoutUITest extends BaseUITest {
         Assert.assertTrue(profilePage.backAfterLogOut());
     }
     @Test(dataProvider = "csvDp1")
-    public void csvTest (LoginModel lm) {
+    public void csvTest (loginModel lm) {
 
         logoutActions(lm);
 

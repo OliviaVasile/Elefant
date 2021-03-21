@@ -1,12 +1,12 @@
 package models;
 
-public class ProductModel {
+public class productModel {
     private String product;
 
-    public ProductModel(){
+    public productModel (){
 
     }
-    public ProductModel(String product){
+    public productModel (String product){
         this.product = product;
     }
 

@@ -1,7 +1,7 @@
 package tests;
 
 import com.opencsv.CSVReader;
-import models.ProductModel;
+import models.productModel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class ProductPageUITest extends BaseUITest {
+public class ProductPageTest extends BaseTest {
 
     @DataProvider(name = "csvDp")
     public Iterator<Object[]> csvDpCollection ( ) throws IOException {
@@ -27,7 +27,7 @@ public class ProductPageUITest extends BaseUITest {
         CSVReader csvReader = new CSVReader(reader);
         List<String[]> csvData = csvReader.readAll();
         for (int i = 0; i < csvData.size(); i++) {
-            dp.add(new Object[]{new ProductModel(csvData.get(i)[0]
+            dp.add(new Object[]{new productModel(csvData.get(i)[0]
             )});
         }
         return dp.iterator();
@@ -35,7 +35,7 @@ public class ProductPageUITest extends BaseUITest {
 
 //validate that the product title from products list is the same with the product title from product page
     @Test(dataProvider = "csvDp")
-    public void testViewProduct (ProductModel pm ) throws InterruptedException {
+    public void testViewProduct (productModel pm ) throws InterruptedException {
 
         ProductPage pp = new ProductPage(driver);
         pp.openProductPage(hostname);

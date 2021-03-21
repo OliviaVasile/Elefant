@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class BaseUITest {
+public class BaseTest {
     WebDriver driver;
     String hostname;
     String dbHostname;

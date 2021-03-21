@@ -1,15 +1,15 @@
 package models;
 
-public class CartModel {
+public class cartModel {
     private String qty;
     private String mesaj;
 
 
-    public CartModel ( ) {
+    public cartModel ( ) {
 
     }
 
-    public CartModel (String keyword , String result) {
+    public cartModel (String keyword , String result) {
         this.qty = qty;
         this.mesaj = mesaj;
 

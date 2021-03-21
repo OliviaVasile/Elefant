@@ -1,11 +1,13 @@
 package pageObject;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import javafx.scene.control.Tab;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.SeleniumUtils;
 
@@ -61,46 +63,52 @@ public class RegisterPage {
         PageFactory.initElements(this.driver , this);
     }
 
+//    public void forceSendKeys(WebElement element, String text)
+//    {
+//        if (element != null)
+//            ((JavascriptExecutor) this.driver).executeScript("arguments[0].value=arguments[1]", element, text);
+//    }
+
+
     public void register (String Prenume , String Nume , String Judet , String Oras ,
                           String Adresa , String Telefon , String Email ,
                           String Parola , String ConfParola
     ) {
 
+        Actions act = new Actions(driver);
+        act.moveToElement(fn);
+        SeleniumUtils.forceSendKeys(driver,fn, Prenume);
 
-        fn.clear();
-        fn.sendKeys(Prenume);
-//        wait.until(ExpectedConditions.elementToBeClickable(ln)).click();
-        ln.clear();
-        ln.sendKeys(Nume);
-//        wait.until(ExpectedConditions.elementToBeClickable(judet)).click();
-        judet.clear();
-        judet.sendKeys(Judet);
-//        wait.until(ExpectedConditions.elementToBeClickable(oras)).click();
-        oras.clear();
-        oras.sendKeys(Oras);
-//        wait.until(ExpectedConditions.elementToBeClickable(strada)).click();
-        strada.clear();
-        strada.sendKeys(Adresa);
-//        wait.until(ExpectedConditions.elementToBeClickable(telefon)).click();
-        telefon.clear();
-        telefon.sendKeys(Telefon);
-//        wait.until(ExpectedConditions.elementToBeClickable(email)).click();
-        email.clear();
-        email.sendKeys(Email);
-//        wait.until(ExpectedConditions.elementToBeClickable(parola)).click();
-        parola.clear();
-        parola.sendKeys(Parola);
-//        wait.until(ExpectedConditions.elementToBeClickable(confparola)).click();
-        confparola.clear();
-        confparola.sendKeys(ConfParola);
+        act.moveToElement(ln);
+        SeleniumUtils.forceSendKeys(driver,ln, Nume);
 
+        act.moveToElement(judet);
+        SeleniumUtils.forceSendKeys(driver, judet, Judet);
 
-        creazaCont.submit();
+        act.moveToElement(oras);
+        SeleniumUtils.forceSendKeys(driver, oras, Oras);
 
-//        waitForRegisterPage();
+        act.moveToElement(strada);
+        SeleniumUtils.forceSendKeys(driver, strada, Adresa);
+
+        act.moveToElement(telefon);
+        SeleniumUtils.forceSendKeys(driver, telefon, Telefon);
+
+        act.moveToElement(email);
+        SeleniumUtils.forceSendKeys(driver, email, Email);
+
+        act.moveToElement(parola);
+        SeleniumUtils.forceSendKeys(driver, parola, Parola);
+
+        act.moveToElement(confparola);
+        SeleniumUtils.forceSendKeys(driver,confparola, ConfParola);
+
+        SeleniumUtils.waitForGenericElement(driver,By.id("createacc"),15);
+     SeleniumUtils.jsExecute(driver, By.id("createacc"));
+
 
     }
-//
+
 //    public boolean checkErr (String error , String type) {
 //        if (type.equalsIgnoreCase("fnErr"))
 //            return error.equals(fnErrMsg.getText());
@@ -157,13 +165,7 @@ public class RegisterPage {
     public void openRegisterPage (String hostname) {
         System.out.println("Open the next url:" + hostname + "/customer/account/create/");
         driver.get(hostname + "/customer/account/create/");
-
-//        WebDriverWait wait = new WebDriverWait(driver , 15);
-//        for (int i = 0; i < 5; i++) {
-//            WebElement registration = wait.until(
-//                    ExpectedConditions.presenceOfElementLocated(By.id("register-tab")));
-//            registration.click();
-//
+        SeleniumUtils.waitForGenericElement(driver,By.id("createacc"),5);
 
     }
 

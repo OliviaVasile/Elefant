@@ -1,7 +1,6 @@
 package tests;
 
-import models.CartModel;
-import org.openqa.selenium.NoSuchElementException;
+import models.cartModel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -17,7 +16,7 @@ import java.util.Iterator;
 
 import static utils.OtherUtils.sanitizeNullDbString;
 
-public class CartUITest extends BaseUITest {
+public class UpdateCartTest extends BaseTest {
 
     @DataProvider(name = "sqlDp")
     public Iterator<Object[]> sqlDpCollection ( ) {
@@ -29,7 +28,7 @@ public class CartUITest extends BaseUITest {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM automation.addcart;");
             while (results.next()) {
-                CartModel cm = new CartModel();
+                cartModel cm = new cartModel();
                 cm.setQty(sanitizeNullDbString(results.getString("qty")));
                 cm.setMesaj(sanitizeNullDbString(results.getString("succes")));
 
@@ -45,7 +44,7 @@ public class CartUITest extends BaseUITest {
 
     @Test(dataProvider = "sqlDp")
 //validate that Continua to checkout button is not displayed after deleting the cart
-    public void ContinuaButton (CartModel cm) throws Exception {
+    public void ContinuaButton (cartModel cm) throws Exception {
         CartPage cp = new CartPage(driver);
         ProductPage pp = new ProductPage(driver);
         FilterPage fp = new FilterPage(driver);

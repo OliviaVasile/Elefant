@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
-public class AccountModel {
+public class accountModel {
     private String username;
     private String password;
 

@@ -1,14 +1,14 @@
 package models;
 
-public class SearchModel {
+public class searchModel {
     private String keyword;
     private String result;
 
-    public SearchModel ( ) {
+    public searchModel ( ) {
 
     }
 
-    public SearchModel (String keyword , String result) {
+    public searchModel (String keyword , String result) {
         this.keyword = keyword;
         this.result = result;
     }

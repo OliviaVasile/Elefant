@@ -1,20 +1,17 @@
 package models;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-
-public class LoginModel {
-    private AccountModel account;
+public class loginModel {
+    private accountModel account;
     private String userError;
     private String passwordError;
     private String generalError;
 
-    public AccountModel getAccount ( ) {
+    public accountModel getAccount ( ) {
         return account;
     }
 
-    public void setAccount (AccountModel account) {
+    public void setAccount (accountModel account) {
         this.account = account;
     }
 
@@ -42,19 +39,19 @@ public class LoginModel {
         this.generalError = generalError;
     }
 
-    public LoginModel ( ) {
+    public loginModel ( ) {
 
     }
 
-    public LoginModel (AccountModel account , String userError , String passwordError , String generalError) {
+    public loginModel (accountModel account , String userError , String passwordError , String generalError) {
         this.account = account;
         this.userError = userError;
         this.passwordError = passwordError;
         this.generalError = generalError;
     }
 
-    public LoginModel (String username , String password , String userError , String passwordError , String generalError) {
-        AccountModel ac = new AccountModel();
+    public loginModel (String username , String password , String userError , String passwordError , String generalError) {
+        accountModel ac = new accountModel();
         ac.setUsername(username);
         ac.setPassword(password);
         this.account = ac;

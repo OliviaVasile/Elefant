@@ -34,7 +34,6 @@ public class ProfilePage {
 
     public void logOut ( ) {
         contulTau.click();
-//    wait.until(ExpectedConditions.elementToBeClickable(logOutButton)).click();
         logOutButton.click();
     }
 

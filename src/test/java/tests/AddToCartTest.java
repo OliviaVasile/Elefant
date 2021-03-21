@@ -1,16 +1,12 @@
 package tests;
 
 import com.opencsv.CSVReader;
-import models.CartModel;
-import models.LoginModel;
-import models.SearchModel;
+import models.cartModel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageObject.CartPage;
 import pageObject.ProductPage;
-import pageObject.SearchPage;
-import utils.SeleniumUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,21 +21,21 @@ import java.util.List;
 
 import static utils.OtherUtils.sanitizeNullDbString;
 
-public class AddToCartUITest extends BaseUITest {
+public class AddToCartTest extends BaseTest {
 
-    private void printData (CartModel cm) {
+    private void printData (cartModel cm) {
 
         System.out.println(cm.getMesaj());
 
     }
 
-    private void printQData (CartModel cm) {
+    private void printQData (cartModel cm) {
         System.out.println(cm.getQty());
         System.out.println(cm.getMesaj());
 
     }
-//validate that "Aparat pentru clătite Joy a fost adaugat in cos." message is presen
-    private void addCartActions (CartModel cm) {
+//validate that "Aparat pentru clătite Joy a fost adaugat in cos." message is present
+    private void addCartActions (cartModel cm) {
         CartPage cp = new CartPage(driver);
         ProductPage pp = new ProductPage(driver);
 //        cp.openCart(hostname);
@@ -55,7 +51,7 @@ public class AddToCartUITest extends BaseUITest {
 
 //validate that "Aparat pentru clătite Joy a fost adaugat in cos." message is present;
 //validate that qty inserted in product page is the same with the resulted qty from cart page
-    private void addCartQActions (CartModel cm) {
+    private void addCartQActions (cartModel cm) {
         CartPage cp = new CartPage(driver);
         ProductPage pp = new ProductPage(driver);
         pp.openProductPage(hostname);
@@ -73,7 +69,7 @@ public class AddToCartUITest extends BaseUITest {
 
     //validate that "Aparat pentru clătite Joy a fost adaugat in cos." message is present;
 //validate that by clicking once "+" the qty from cart page is inserted qty in the product page + 1
-    private void addCartPlusActions (CartModel cm) {
+    private void addCartPlusActions (cartModel cm) {
         CartPage cp = new CartPage(driver);
         ProductPage pp = new ProductPage(driver);
         pp.openProductPage(hostname);
@@ -96,7 +92,7 @@ public class AddToCartUITest extends BaseUITest {
         List<String[]> csvData = csvReader.readAll();
         for (int i = 0; i < csvData.size(); i++) {
 
-            dp.add(new Object[]{new CartModel(csvData.get(i)[0] ,
+            dp.add(new Object[]{new cartModel(csvData.get(i)[0] ,
                     csvData.get(i)[1])});
         }
         return dp.iterator();
@@ -113,7 +109,7 @@ public class AddToCartUITest extends BaseUITest {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM automation.addcart;");
             while (results.next()) {
-                CartModel cm = new CartModel();
+                cartModel cm = new cartModel();
                 cm.setQty(sanitizeNullDbString(results.getString("qty")));
                 cm.setMesaj(sanitizeNullDbString(results.getString("succes")));
 
@@ -136,21 +132,21 @@ public class AddToCartUITest extends BaseUITest {
 //    }
 
     @Test(dataProvider = "sqlDp")
-    public void addToCart (CartModel cm) {
+    public void addToCart (cartModel cm) {
         printData(cm);
         addCartActions(cm);
 
     }
 
     @Test(dataProvider = "sqlDp")
-    public void addQToCart (CartModel cm) {
+    public void addQToCart (cartModel cm) {
         printQData(cm);
         addCartQActions(cm);
 
     }
 
     @Test(dataProvider = "sqlDp")
-    public void addPlusToCart (CartModel cm) {
+    public void addPlusToCart (cartModel cm) {
 
         addCartPlusActions(cm);
 

@@ -1,6 +1,6 @@
 package models;
 
-public class RegisterModel {
+public class registerModel {
     private String prenume;
     private String nume;
     private String judet;
@@ -20,14 +20,14 @@ public class RegisterModel {
     private String eroareParola;
     private String eroareConfParola;
 
-    public RegisterModel ( ) {
+    public registerModel ( ) {
 
     }
 
-    public RegisterModel (String prenume , String nume , String judet , String oras ,
+    public registerModel (String prenume , String nume , String judet , String oras ,
                           String adresa , String telefon , String email ,
-                          String parola , String confParola , String eroareNume ,
-                          String eroarePrenume , String eroareJudet , String eroareOras ,
+                          String parola , String confParola ,String eroarePrenume , String eroareNume,
+                            String eroareJudet , String eroareOras ,
                           String eroareAdresa , String eroareTelefon , String eroareEmail ,
                           String eroareParola , String eroareConfParola) {
 

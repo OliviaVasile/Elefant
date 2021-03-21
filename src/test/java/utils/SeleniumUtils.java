@@ -81,7 +81,7 @@ public class SeleniumUtils {
                     if (expectedError.isEmpty())
                         element = driver.findElement(by);
                     else
-                        element = SeleniumUtils.waitForGenericElement(driver, by, 15);
+                        element = SeleniumUtils.waitForGenericElement(driver, by, 20);
                     message = element.getText();
                     return message.equals(expectedError);
                 } catch (ElementClickInterceptedException | NoSuchElementException | TimeoutException e) {
@@ -112,5 +112,23 @@ public static void jsExecute(WebDriver driver, By by) {
     jse.executeScript("arguments[0].click()" , ele);
 
 }
+
+    public static void forceSendKeys(WebDriver driver, WebElement element, String text)
+
+    {
+        if (element != null)
+            ((JavascriptExecutor)driver).executeScript("arguments[0].value=arguments[1]", element, text);
+    }
+
+
+
+    public static void waitForAjax(WebDriver driver, By by, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+
+    }
+
+
+
 
 }

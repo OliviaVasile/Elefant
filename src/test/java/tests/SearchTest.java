@@ -1,28 +1,20 @@
 package tests;
 
-import com.opencsv.CSVReader;
-
-import models.SearchModel;
+import models.searchModel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import pageObject.SearchPage;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import static utils.OtherUtils.sanitizeNullDbString;
 
-public class SearchUITest extends BaseUITest {
+public class SearchTest extends BaseTest {
 
     //    @DataProvider(name = "csvDp")
 //    public Iterator<Object[]> csvDp1Collection ( ) throws IOException {
@@ -40,7 +32,7 @@ public class SearchUITest extends BaseUITest {
 //        return dp.iterator();
 //    }
 
-    private void printNegativeData (SearchModel sm) {
+    private void printNegativeData (searchModel sm) {
         System.out.println(sm.getKeyword());
         System.out.println(sm.getResult());
 
@@ -48,21 +40,21 @@ public class SearchUITest extends BaseUITest {
     //validate that "Ne pare rău, dar nu au fost găsite rezultate care să corespundă termenilor dvs.
 // de căutare. Vă rugăm să verificați ortografia sau să adăugați un cuvânt alternativ.
 // De asemenea, puteți verifica produsele de mai jos care v-ar putea interesa." message is present on page
-    private void searchNegativeActions (SearchModel sm) {
+    private void searchNegativeActions (searchModel sm) {
         SearchPage sp = new SearchPage(driver);
         sp.openSearchPage(hostname);
         sp.search(sm.getKeyword() , sm.getResult());
         Assert.assertEquals(sm.getResult() , sp.getResult());
     }
 //not present on page
-    private void printPositiveData (SearchModel sm) {
+    private void printPositiveData (searchModel sm) {
         System.out.println(sm.getKeyword());
 
     }
 
 
 
-    private void searchPositiveActions (SearchModel sm)  {
+    private void searchPositiveActions (searchModel sm)  {
         SearchPage sp = new SearchPage(driver);
         sp.openSearchPage(hostname);
         sp.search(sm.getKeyword() , sm.getResult());
@@ -79,7 +71,7 @@ public class SearchUITest extends BaseUITest {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM automation.search;");
             while (results.next()) {
-                SearchModel sm = new SearchModel();
+                searchModel sm = new searchModel();
                 sm.setKeyword(sanitizeNullDbString(results.getString("keyword")));
                 sm.setResult(sanitizeNullDbString(results.getString("result")));
                 dp.add(new Object[]{sm});
@@ -102,7 +94,7 @@ public class SearchUITest extends BaseUITest {
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM automation.positivesearch;");
             while (results.next()) {
-                SearchModel sm = new SearchModel();
+                searchModel sm = new searchModel();
                 sm.setKeyword(sanitizeNullDbString(results.getString("keyword")));
                 sm.setResult(sanitizeNullDbString(results.getString("result")));
                 dp.add(new Object[]{sm});
@@ -118,7 +110,7 @@ public class SearchUITest extends BaseUITest {
 
 
     @Test(dataProvider = "sqlDp")
-    public void searchNegative (SearchModel sm) {
+    public void searchNegative (searchModel sm) {
         printNegativeData(sm);
         searchNegativeActions(sm);
     }
@@ -127,7 +119,7 @@ public class SearchUITest extends BaseUITest {
 // de căutare. Vă rugăm să verificați ortografia sau să adăugați un cuvânt alternativ.
 // De asemenea, puteți verifica produsele de mai jos care v-ar putea interesa." message is not present
     @Test(dataProvider = "sqlDp1")
-    public void searchPositive (SearchModel sm) {
+    public void searchPositive (searchModel sm) {
         printPositiveData(sm);
         searchPositiveActions(sm);
     }
