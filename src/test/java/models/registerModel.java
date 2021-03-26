@@ -19,6 +19,10 @@ public class registerModel {
     private String eroareEmail;
     private String eroareParola;
     private String eroareConfParola;
+    private String validEmailError;
+    private String validPasswordError;
+    private String mismatchPassError;
+    private String alreadyRegisteredUser;
 
     public registerModel ( ) {
 
@@ -26,10 +30,13 @@ public class registerModel {
 
     public registerModel (String prenume , String nume , String judet , String oras ,
                           String adresa , String telefon , String email ,
-                          String parola , String confParola ,String eroarePrenume , String eroareNume,
-                            String eroareJudet , String eroareOras ,
+                          String parola , String confParola ,
+                          String eroarePrenume , String eroareNume ,
+                          String eroareJudet , String eroareOras ,
                           String eroareAdresa , String eroareTelefon , String eroareEmail ,
-                          String eroareParola , String eroareConfParola) {
+                          String eroareParola , String eroareConfParola ,
+                          String validEmailError , String validPasswordError ,
+                          String mismatchPassError , String alreadyRegisteredUser) {
 
 
         this.prenume = prenume;
@@ -50,6 +57,10 @@ public class registerModel {
         this.eroareEmail = eroareEmail;
         this.eroareParola = eroareParola;
         this.eroareConfParola = eroareConfParola;
+        this.validEmailError = validEmailError;
+        this.validPasswordError = validPasswordError;
+        this.mismatchPassError = mismatchPassError;
+        this.alreadyRegisteredUser = alreadyRegisteredUser;
 
     }
 
@@ -195,5 +206,37 @@ public class registerModel {
 
     public void setEroareConfParola (String eroareConfParola) {
         this.eroareConfParola = eroareConfParola;
+    }
+
+    public String getValidEmailError ( ) {
+        return validEmailError;
+    }
+
+    public void setValidEmailError (String validEmailError) {
+        this.validEmailError = validEmailError;
+    }
+
+    public String getValidPasswordError ( ) {
+        return validPasswordError;
+    }
+
+    public void setValidPasswordError (String validPasswordError) {
+        this.validPasswordError = validPasswordError;
+    }
+
+    public String getMismatchPassError ( ) {
+        return mismatchPassError;
+    }
+
+    public void setMismatchPassError (String mismatchPassError) {
+        this.mismatchPassError = mismatchPassError;
+    }
+
+    public String getAlreadyRegisteredUser ( ) {
+        return alreadyRegisteredUser;
+    }
+
+    public void setAlreadyRegisteredUser (String alreadyRegisteredUser) {
+        this.alreadyRegisteredUser = alreadyRegisteredUser;
     }
 }

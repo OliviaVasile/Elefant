@@ -1,5 +1,6 @@
 package tests;
 
+import com.gargoylesoftware.htmlunit.util.Cookie;
 import com.opencsv.CSVReader;
 import models.registerModel;
 import org.testng.Assert;
@@ -23,9 +24,46 @@ import java.util.List;
 import static utils.OtherUtils.sanitizeNullDbString;
 
 public class RegisterTest extends BaseTest {
+    @Test(dataProvider = "csvDp")
+
+    //    validate that user is not able to register with empty fields;
+    //    validate that user is not able to register using invalid email format;
+    //    validate that user is not able to register using invalid password format (& boundary values);
+    //    validate that user is not able to register using an already registered email address;
+    public void csvNegativeRegister (registerModel rm) {
+        printNegativeData(rm);
+        negativeRegisterActions(rm);
+    }
+
+
+    @Test(dataProvider = "sqlDp")
+    public void sqlNegativeRegister (registerModel rm) {
+
+        printNegativeData(rm);
+        negativeRegisterActions(rm);
+
+    }
+
+    // validate that inserted email is the one from the profile page
+    @Test(dataProvider = "csvDp1")
+    public void csvPositiveRegister (registerModel rm) {
+
+        printPositiveData(rm);
+        positiveRegisterActions(rm);
+
+    }
+
+    @Test(dataProvider = "sqlDp1")
+    public void sqlPositiveRegister (registerModel rm) {
+
+        printPositiveData(rm);
+        positiveRegisterActions(rm);
+
+    }
+
 
     @DataProvider(name = "csvDp")
-    public Iterator<Object[]> csvDpCollection() throws IOException {
+    public Iterator<Object[]> csvDpCollection ( ) throws IOException {
         Collection<Object[]> dp = new ArrayList<>();
         File f = new File("src\\test\\resources\\data\\registerNeg.csv");
         Reader reader = Files.newBufferedReader(Paths.get(f.getAbsolutePath()));
@@ -34,31 +72,34 @@ public class RegisterTest extends BaseTest {
         for (int i = 0; i < csvData.size(); i++) {
 
             dp.add(new Object[]{new registerModel(
-                    csvData.get(i)[0],
-                    csvData.get(i)[1],
-                    csvData.get(i)[2],
-                    csvData.get(i)[3],
-                    csvData.get(i)[4],
-                    csvData.get(i)[5],
-                    csvData.get(i)[6],
-                    csvData.get(i)[7],
-                    csvData.get(i)[8],
-                    csvData.get(i)[9],
-                    csvData.get(i)[10],
-                    csvData.get(i)[11],
-                    csvData.get(i)[12],
-                    csvData.get(i)[13],
-                    csvData.get(i)[14],
-                    csvData.get(i)[15],
-                    csvData.get(i)[16],
-                    csvData.get(i)[17])});
-
+                    csvData.get(i)[0] ,
+                    csvData.get(i)[1] ,
+                    csvData.get(i)[2] ,
+                    csvData.get(i)[3] ,
+                    csvData.get(i)[4] ,
+                    csvData.get(i)[5] ,
+                    csvData.get(i)[6] ,
+                    csvData.get(i)[7] ,
+                    csvData.get(i)[8] ,
+                    csvData.get(i)[9] ,
+                    csvData.get(i)[10] ,
+                    csvData.get(i)[11] ,
+                    csvData.get(i)[12] ,
+                    csvData.get(i)[13] ,
+                    csvData.get(i)[14] ,
+                    csvData.get(i)[15] ,
+                    csvData.get(i)[16] ,
+                    csvData.get(i)[17] ,
+                    csvData.get(i)[18] ,
+                    csvData.get(i)[19] ,
+                    csvData.get(i)[20] ,
+                    csvData.get(i)[21])});
         }
         return dp.iterator();
     }
 
     @DataProvider(name = "csvDp1")
-    public Iterator<Object[]> csvDp1Collection() throws IOException {
+    public Iterator<Object[]> csvDp1Collection ( ) throws IOException {
         Collection<Object[]> dp = new ArrayList<>();
         File f = new File("src\\test\\resources\\data\\registerPoz.csv");
         Reader reader = Files.newBufferedReader(Paths.get(f.getAbsolutePath()));
@@ -67,37 +108,41 @@ public class RegisterTest extends BaseTest {
         for (int i = 0; i < csvData.size(); i++) {
 
             dp.add(new Object[]{new registerModel(
-                    csvData.get(i)[0],
-                    csvData.get(i)[1],
-                    csvData.get(i)[2],
-                    csvData.get(i)[3],
-                    csvData.get(i)[4],
-                    csvData.get(i)[5],
-                    csvData.get(i)[6],
-                    csvData.get(i)[7],
-                    csvData.get(i)[8],
-                    csvData.get(i)[9],
-                    csvData.get(i)[10],
-                    csvData.get(i)[11],
-                    csvData.get(i)[12],
-                    csvData.get(i)[13],
-                    csvData.get(i)[14],
-                    csvData.get(i)[15],
-                    csvData.get(i)[16],
-                    csvData.get(i)[17])});
+                    csvData.get(i)[0] ,
+                    csvData.get(i)[1] ,
+                    csvData.get(i)[2] ,
+                    csvData.get(i)[3] ,
+                    csvData.get(i)[4] ,
+                    csvData.get(i)[5] ,
+                    csvData.get(i)[6] ,
+                    csvData.get(i)[7] ,
+                    csvData.get(i)[8] ,
+                    csvData.get(i)[9] ,
+                    csvData.get(i)[10] ,
+                    csvData.get(i)[11] ,
+                    csvData.get(i)[12] ,
+                    csvData.get(i)[13] ,
+                    csvData.get(i)[14] ,
+                    csvData.get(i)[15] ,
+                    csvData.get(i)[16] ,
+                    csvData.get(i)[17] ,
+                    csvData.get(i)[18] ,
+                    csvData.get(i)[19] ,
+                    csvData.get(i)[20] ,
+                    csvData.get(i)[21])});
 
         }
         return dp.iterator();
     }
 
 
-    @DataProvider (name="sqlDp")
-    public Iterator<Object[]> sqlDpCollection() {
+    @DataProvider(name = "sqlDp")
+    public Iterator<Object[]> sqlDpCollection ( ) {
         Collection<Object[]> dp = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema,
-                    dbUsername, dbPassword);
+                    "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema ,
+                    dbUsername , dbPassword);
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM automation.registernegative;");
             while (results.next()) {
@@ -120,6 +165,10 @@ public class RegisterTest extends BaseTest {
                 rm.setEroareEmail(sanitizeNullDbString(results.getString("eroareemail")));
                 rm.setEroareParola(sanitizeNullDbString(results.getString("eroareparola")));
                 rm.setEroareConfParola(sanitizeNullDbString(results.getString("eroareparola2")));
+                rm.setValidEmailError(sanitizeNullDbString(results.getString("eroareemailvalid")));
+                rm.setValidPasswordError(sanitizeNullDbString(results.getString("eroareparolavalida")));
+                rm.setMismatchPassError(sanitizeNullDbString(results.getString("eroarevaloriparole")));
+                rm.setAlreadyRegisteredUser(sanitizeNullDbString(results.getString("eroareuserinregistrat")));
 
 
                 dp.add(new Object[]{rm});
@@ -134,13 +183,13 @@ public class RegisterTest extends BaseTest {
 
     }
 
-    @DataProvider (name="sqlDp1")
-    public Iterator<Object[]> sqlDp1Collection() {
+    @DataProvider(name = "sqlDp1")
+    public Iterator<Object[]> sqlDp1Collection ( ) {
         Collection<Object[]> dp = new ArrayList<>();
         try {
             Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema,
-                    dbUsername, dbPassword);
+                    "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema ,
+                    dbUsername , dbPassword);
             Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery("SELECT * FROM automation.registerpositive;");
             while (results.next()) {
@@ -196,74 +245,72 @@ public class RegisterTest extends BaseTest {
         System.out.println(rm.getEroareEmail());
         System.out.println(rm.getEroareParola());
         System.out.println(rm.getEroareConfParola());
+        System.out.println(rm.getValidEmailError());
+        System.out.println(rm.getValidPasswordError());
+        System.out.println(rm.getMismatchPassError());
+        System.out.println(rm.getAlreadyRegisteredUser());
     }
+
     private void printPositiveData (registerModel rm) {
         System.out.println(rm.getPrenume());
         System.out.println(rm.getNume());
+        System.out.println(rm.getJudet());
+        System.out.println(rm.getOras());
+        System.out.println(rm.getAdresa());
+        System.out.println(rm.getTelefon());
         System.out.println(rm.getEmail());
+        System.out.println(rm.getParola());
+        System.out.println(rm.getConfParola());
+//        ProfilePage pp = new ProfilePage(driver);
+//        because captcha :(
+//        System.out.println(pp.getUser());
+
 
     }
 
-    private void negativeRegisterActions (registerModel rm){
+
+    private void negativeRegisterActions (registerModel rm) {
         RegisterPage rp = new RegisterPage(driver);
         rp.openRegisterPage(hostname);
-        rp.register(rm.getPrenume(), rm.getNume(), rm.getJudet(), rm.getOras(),
-                rm.getAdresa(), rm.getTelefon(),
-                rm.getEmail(), rm.getParola() , rm.getConfParola());
+        rp.register(rm.getPrenume() , rm.getNume() , rm.getJudet() , rm.getOras() ,
+                rm.getAdresa() , rm.getTelefon() ,
+                rm.getEmail() , rm.getParola() , rm.getConfParola());
 
-        Assert.assertTrue(rp.checkErr(rm.getEroarePrenume(), "fnErr"));
-        Assert.assertTrue(rp.checkErr(rm.getEroareNume(), "lnErr"));
-        Assert.assertTrue(rp.checkErr(rm.getEroareJudet(), "judetErr"));
-        Assert.assertTrue(rp.checkErr(rm.getEroareOras(), "orasErr"));
-        Assert.assertTrue(rp.checkErr(rm.getEroareAdresa(), "adresaErr"));
-        Assert.assertTrue(rp.checkErr(rm.getEroareTelefon(), "telefonErr"));
-        Assert.assertTrue(rp.checkErr(rm.getEroareEmail(), "emailErr"));
-        Assert.assertTrue(rp.checkErr(rm.getEroareParola(), "parolaErr"));
-        Assert.assertTrue(rp.checkErr(rm.getEroareConfParola(), "confParolaErr"));
+        Assert.assertTrue(rp.checkErr(rm.getEroarePrenume() , "fnErr"));
+        Assert.assertTrue(rp.checkErr(rm.getEroareNume() , "lnErr"));
+        Assert.assertTrue(rp.checkErr(rm.getEroareJudet() , "judetErr"));
+        Assert.assertTrue(rp.checkErr(rm.getEroareOras() , "orasErr"));
+        Assert.assertTrue(rp.checkErr(rm.getEroareAdresa() , "adresaErr"));
+        Assert.assertTrue(rp.checkErr(rm.getEroareTelefon() , "telefonErr"));
+        Assert.assertTrue(rp.checkErr(rm.getEroareEmail() , "emailErr"));
+        Assert.assertTrue(rp.checkErr(rm.getEroareParola() , "parolaErr"));
+        Assert.assertTrue(rp.checkErr(rm.getEroareConfParola() , "confParolaErr"));
+        Assert.assertTrue(rp.checkErr(rm.getValidEmailError() , "validEmailErr"));
+        Assert.assertTrue(rp.checkErr(rm.getValidPasswordError() , "validPass"));
+        Assert.assertTrue(rp.checkErr(rm.getMismatchPassError() , "mismatchPassErr"));
+        Assert.assertTrue(rp.checkErr(rm.getAlreadyRegisteredUser() , "alreadyRegisteredErr"));
 
     }
 
+
+
     private void positiveRegisterActions (registerModel rm) {
+//        GOOGLE_ABUSE_EXEMPTION
+//        driver.manage().addCookie(new Cookie("key", "value"));
         LoginPage lp = new LoginPage(driver);
         lp.openLoginPage(hostname);
         RegisterPage rp = new RegisterPage(driver);
         rp.openRegisterPage(hostname);
-        rp.register(rm.getPrenume(), rm.getNume(), rm.getJudet(), rm.getOras(),
-                rm.getAdresa(), rm.getTelefon(),
-                rm.getEmail(), rm.getParola() , rm.getConfParola());
+        rp.register(rm.getPrenume() , rm.getNume() , rm.getJudet() , rm.getOras() ,
+                rm.getAdresa() , rm.getTelefon() ,
+                rm.getEmail() , rm.getParola() , rm.getConfParola());
 
         ProfilePage profilePage = new ProfilePage(driver);
         //because captcha :(
-//        System.out.println("Registered user :" + profilePage.getUser());
-//        Assert.assertEquals(rm.getEmail() , profilePage.getUser());
-//        profilePage.logOut();
+        System.out.println("Registered user :" + profilePage.getUser());
+        Assert.assertEquals(rm.getEmail() , profilePage.getUser());
+        profilePage.logOut();
     }
 
-    @Test(dataProvider = "csvDp")
-    public void csvNegativeRegister(registerModel rm) {
-        printNegativeData(rm);
-        negativeRegisterActions(rm);
-    }
-    @Test (dataProvider = "sqlDp")
-    public void sqlNegativeRegister(registerModel rm) {
-
-        printNegativeData(rm);
-        negativeRegisterActions(rm);
-
-    }
-    @Test (dataProvider = "csvDp1")
-    public void csvPositiveRegister(registerModel rm) {
-
-        printPositiveData(rm);
-        positiveRegisterActions(rm);
-
-    }
-    @Test (dataProvider = "sqlDp1")
-    public void sqlPositiveRegister(registerModel rm) {
-
-        printPositiveData(rm);
-        positiveRegisterActions(rm);
-
-    }
 
 }

@@ -24,6 +24,30 @@ import static utils.OtherUtils.sanitizeNullDbString;
 
 public class LoginTest extends BaseTest {
 
+    @Test(dataProvider = "csvDp1")
+    public void csvLoginPositive (loginModel lm) {
+        printPositiveData(lm);
+        loginPositiveActions(lm);
+    }
+
+    @Test(dataProvider = "sqlPositiveDp")
+    public void sqlLoginPositive (loginModel lm) {
+        printPositiveData(lm);
+        loginPositiveActions(lm);
+    }
+
+    @Test(dataProvider = "csvDp")
+    public void csvLoginNegative (loginModel lm) {
+        printData(lm);
+        loginNegativeActions(lm);
+    }
+
+    @Test(dataProvider = "sqlNegativeDp")
+    public void sqlLoginNegative (loginModel lm) {
+        printData(lm);
+        loginNegativeActions(lm);
+    }
+
 
     private void printData (loginModel lm) {
         System.out.println(lm.getAccount().getUsername());
@@ -32,29 +56,12 @@ public class LoginTest extends BaseTest {
         System.out.println(lm.getPasswordError());
         System.out.println(lm.getGeneralError());
     }
+
     private void printPositiveData (loginModel lm) {
         System.out.println(lm.getAccount().getUsername());
         System.out.println(lm.getAccount().getPassword());
     }
 
-    private void loginActions (loginModel lm) {
-        LoginPage lp = new LoginPage(driver);
-        lp.openLoginPage(hostname);
-        lp.login(lm.getAccount().getUsername() , lm.getAccount().getPassword());
-        Assert.assertTrue(lp.checkErr(lm.getGeneralError() , "generalErr"));
-        Assert.assertTrue(lp.checkErr(lm.getUserError() , "userErr"));
-        Assert.assertTrue(lp.checkErr(lm.getPasswordError() , "passErr"));
-
-    }
-    private void loginPositiveActions (loginModel lm) {
-        LoginPage lp = new LoginPage(driver);
-        lp.openLoginPage(hostname);
-        lp.login(lm.getAccount().getUsername() , lm.getAccount().getPassword());
-        ProfilePage profilePage = new ProfilePage(driver);
-        System.out.println("Logged in user :" + profilePage.getUser());
-        Assert.assertEquals(lm.getAccount().getUsername() , profilePage.getUser());
-        profilePage.logOut();
-    }
 
     @DataProvider(name = "csvDp")
     public Iterator<Object[]> csvDpCollection ( ) throws IOException {
@@ -68,12 +75,15 @@ public class LoginTest extends BaseTest {
                     csvData.get(i)[1] ,
                     csvData.get(i)[2] ,
                     csvData.get(i)[3] ,
-                    csvData.get(i)[4])});
+                    csvData.get(i)[4]
+
+
+            )});
         }
         return dp.iterator();
     }
 
-    @DataProvider(name = "sqlDp")
+    @DataProvider(name = "sqlNegativeDp")
     public Iterator<Object[]> sqlDpCollection ( ) {
         Collection<Object[]> dp = new ArrayList<>();
         try {
@@ -81,7 +91,7 @@ public class LoginTest extends BaseTest {
                     "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema ,
                     dbUsername , dbPassword);
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM automation.authentication;");
+            ResultSet results = statement.executeQuery("SELECT * FROM automation.loginnegative;");
             while (results.next()) {
                 accountModel am = new accountModel();
                 am.setUsername(sanitizeNullDbString(results.getString("username")));
@@ -93,13 +103,6 @@ public class LoginTest extends BaseTest {
                 lm.setGeneralError(sanitizeNullDbString(results.getString("generalError")));
                 dp.add(new Object[]{lm});
 
-
-//                dp.add(new Object[]{new LoginModel(
-//                        results.sanitizeNullDbString(results.getString("username")),
-//                        results.sanitizeNullDbString(results.getString("password")),
-//                        results.sanitizeNullDbString(results.getString("userError")),
-//                        results.sanitizeNullDbString(results.getString("passwordError")),
-//                        results.sanitizeNullDbString(results.getString("generalError")),
 
             }
             statement.close();
@@ -123,11 +126,15 @@ public class LoginTest extends BaseTest {
                     csvData.get(i)[1] ,
                     csvData.get(i)[2] ,
                     csvData.get(i)[3] ,
-                    csvData.get(i)[4])});
+                    csvData.get(i)[4]
+
+
+            )});
         }
         return dp1.iterator();
     }
-    @DataProvider(name = "sqlDp1")
+
+    @DataProvider(name = "sqlPositiveDp")
     public Iterator<Object[]> sqlDp1Collection ( ) {
         Collection<Object[]> dp = new ArrayList<>();
         try {
@@ -135,16 +142,14 @@ public class LoginTest extends BaseTest {
                     "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema ,
                     dbUsername , dbPassword);
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM automation.positiveauthentication;");
+            ResultSet results = statement.executeQuery("SELECT * FROM automation.loginpositive;");
             while (results.next()) {
                 accountModel am = new accountModel();
                 am.setUsername(sanitizeNullDbString(results.getString("username")));
                 am.setPassword(sanitizeNullDbString(results.getString("password")));
+
                 loginModel lm = new loginModel();
                 lm.setAccount(am);
-                lm.setUserError(sanitizeNullDbString(results.getString("userError")));
-                lm.setPasswordError(sanitizeNullDbString(results.getString("passwordError")));
-                lm.setGeneralError(sanitizeNullDbString(results.getString("generalError")));
                 dp.add(new Object[]{lm});
 
             }
@@ -157,29 +162,24 @@ public class LoginTest extends BaseTest {
 
     }
 
-    @Test(dataProvider = "csvDp1")
-    public void csvLoginPositive (loginModel lm) {
-        printPositiveData(lm);
-        loginPositiveActions(lm);
-    }
-    @Test(dataProvider = "sqlDp1")
-    public void sqlLoginPositive (loginModel lm) {
-        printPositiveData(lm);
-        loginPositiveActions(lm);
-    }
+    private void loginNegativeActions (loginModel lm) {
+        LoginPage lp = new LoginPage(driver);
+        lp.openLoginPage(hostname);
+        lp.login(lm.getAccount().getUsername() , lm.getAccount().getPassword());
+        Assert.assertTrue(lp.checkErr(lm.getGeneralError() , "generalErr"));
+        Assert.assertTrue(lp.checkErr(lm.getUserError() , "userErr"));
+        Assert.assertTrue(lp.checkErr(lm.getPasswordError() , "passErr"));
 
-    @Test(dataProvider = "csvDp")
-    public void csvLoginNegative (loginModel lm) {
-        printData(lm);
-        loginActions(lm);
-    }
-    @Test(dataProvider = "sqlDp")
-    public void sqlLoginNegative (loginModel lm) {
-        printData(lm);
-        loginActions(lm);
     }
 
-
-
+    private void loginPositiveActions (loginModel lm) {
+        LoginPage lp = new LoginPage(driver);
+        lp.openLoginPage(hostname);
+        lp.login(lm.getAccount().getUsername() , lm.getAccount().getPassword());
+        ProfilePage profilePage = new ProfilePage(driver);
+        System.out.println("Logged in user :" + profilePage.getUser());
+        Assert.assertEquals(lm.getAccount().getUsername() , profilePage.getUser());
+        profilePage.logOut();
+    }
 
 }

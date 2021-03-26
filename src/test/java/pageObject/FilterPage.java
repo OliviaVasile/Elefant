@@ -23,14 +23,15 @@ public class FilterPage {
 
     @FindBy(how = How.XPATH, using = "//span[contains(text(),'Electrocasnice bucătărie')]")
     WebElement electrocasnice;
-//    @FindBy(how = How.ID, using ="//*[@id=\"footerJsContainer\"]")
-//            WebElement container;
     @FindBy(how = How.XPATH, using = "//*[@id=\"narrow-by-list2\"]/dd/ol/li[1]/a")
     WebElement micdejun;
     @FindBy(how = How.XPATH, using = "//*[@id=\"narrow-by-list\"]/li[2]/label")
     WebElement marca;
-    @FindBy(how = How.XPATH, using = "//div[@class='top-filters']//p[@class='amount'][normalize-space()='7 Articol(e)']")
+    @FindBy(how = How.CLASS_NAME, using = "amount")
     WebElement noOfItems;
+
+
+    By rezultat = By.cssSelector("h2[class='product-name js-gtm-data'] a[title='Aparat pentru clătite Joy']");
 
     public FilterPage (WebDriver driver) {
         this.driver = driver;
@@ -47,37 +48,41 @@ public class FilterPage {
 
 
     public String filterResults ( ) {
-//        Actions act = new Actions(driver);
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(),'Electrocasnice bucătărie')]")));
-
         electrocasnice.click();
 //        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"footerJsContainer\"]")));
 //        act.moveToElement(container);
-
         wait.until(ExpectedConditions.elementToBeClickable(micdejun));
 //        act.moveToElement(micdejun);
-
         micdejun.click();
-
         wait.until(ExpectedConditions.elementToBeClickable(marca));
         marca.click();
         WebElement delimano = driver.findElement(By.xpath("//article[@class='ac-small']//a[contains(text(),'Delimano')]"));
-      wait.until(ExpectedConditions.elementToBeClickable(delimano));
+        wait.until(ExpectedConditions.elementToBeClickable(delimano));
         delimano.click();
-
         System.out.println("Rezultatul afisat este:" + noOfItems.getText());
-        String result = driver.findElement(By.xpath("//div[@class='top-filters']//p[@class='amount'][normalize-space()='7 Articol(e)']")).getText().split(" ")[0];
+        String result = driver.findElement(By.className("amount")).getText().split(" ")[0];
         System.out.println(result);
         return result;
 
     }
 
     public String numberOfProducts ( ) {
-
         List<WebElement> data = driver.findElements(By.className("view-prod"));
         System.out.println("total number of products  == " + data.size());
         return String.valueOf(data.size());
+
+    }
+
+    public String titleFirstProduct ( ) {
+        String title = driver.findElement(By.cssSelector("h2[class='product-name js-gtm-data'] a[title='Aparat pentru clătite Joy']")).getText();
+        return title;
+    }
+
+    public void pickFirstProduct ( ) {
+
+        SeleniumUtils.jsExecute(driver , rezultat);
     }
 
 }

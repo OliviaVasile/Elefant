@@ -4,10 +4,7 @@ import models.cartModel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pageObject.CartPage;
-import pageObject.CheckoutPage;
-import pageObject.FilterPage;
-import pageObject.ProductPage;
+import pageObject.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,6 +14,21 @@ import java.util.Iterator;
 import static utils.OtherUtils.sanitizeNullDbString;
 
 public class UpdateCartTest extends BaseTest {
+
+    @Test(dataProvider = "sqlDp")
+//validate that Continua to checkout button is not displayed after deleting the cart
+    public void ContinuaButton (cartModel cm)  {
+        CartPage cp = new CartPage(driver);
+        SearchPage sp = new SearchPage(driver);
+        ProductPage pp = new ProductPage(driver);
+        sp.openSearchPage(hostname);
+        sp.search(cm.getKeyword(), cm.getResult());
+        sp.pickElement();
+        pp.addToCart();
+        cp.deleteCart();
+        Assert.assertFalse(cp.continuaAfterDeleteCart());
+
+    }
 
     @DataProvider(name = "sqlDp")
     public Iterator<Object[]> sqlDpCollection ( ) {
@@ -29,8 +41,8 @@ public class UpdateCartTest extends BaseTest {
             ResultSet results = statement.executeQuery("SELECT * FROM automation.addcart;");
             while (results.next()) {
                 cartModel cm = new cartModel();
-                cm.setQty(sanitizeNullDbString(results.getString("qty")));
-                cm.setMesaj(sanitizeNullDbString(results.getString("succes")));
+                cm.setKeyword(sanitizeNullDbString(results.getString("keyword")));
+
 
                 dp.add(new Object[]{cm});
             }
@@ -42,17 +54,6 @@ public class UpdateCartTest extends BaseTest {
         return dp.iterator();
     }
 
-    @Test(dataProvider = "sqlDp")
-//validate that Continua to checkout button is not displayed after deleting the cart
-    public void ContinuaButton (cartModel cm) throws Exception {
-        CartPage cp = new CartPage(driver);
-        ProductPage pp = new ProductPage(driver);
-        FilterPage fp = new FilterPage(driver);
-        CheckoutPage ckp = new CheckoutPage();
-        fp.openFilterPage(hostname);
-        pp.addQToCart(cm.getQty() , cm.getMesaj());
-        cp.deleteCart();
-        Assert.assertTrue(cp.checkContinuaAfterDeleteCart());
 
-    }
+
 }

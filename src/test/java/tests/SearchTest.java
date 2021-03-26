@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import pageObject.ProductPage;
 import pageObject.SearchPage;
 
 import java.sql.*;
@@ -16,49 +17,19 @@ import static utils.OtherUtils.sanitizeNullDbString;
 
 public class SearchTest extends BaseTest {
 
-    //    @DataProvider(name = "csvDp")
-//    public Iterator<Object[]> csvDp1Collection ( ) throws IOException {
-//        Collection<Object[]> dp = new ArrayList<>();
-//        File f = new File("src\\test\\resources\\data\\search.csv");
-//        Reader reader = Files.newBufferedReader(Paths.get(f.getAbsolutePath()));
-//        CSVReader csvReader = new CSVReader(reader);
-//        List<String[]> csvData = csvReader.readAll();
-//        for (int i = 0; i < csvData.size(); i++) {
-//
-//            dp.add(new Object[]{new SearchModel(csvData.get(i)[0] ,
-//                    csvData.get(i)[1]
-//            )});
-//        }
-//        return dp.iterator();
-//    }
-
-    private void printNegativeData (searchModel sm) {
-        System.out.println(sm.getKeyword());
-        System.out.println(sm.getResult());
-
-    }
-    //validate that "Ne pare rău, dar nu au fost găsite rezultate care să corespundă termenilor dvs.
-// de căutare. Vă rugăm să verificați ortografia sau să adăugați un cuvânt alternativ.
-// De asemenea, puteți verifica produsele de mai jos care v-ar putea interesa." message is present on page
-    private void searchNegativeActions (searchModel sm) {
-        SearchPage sp = new SearchPage(driver);
-        sp.openSearchPage(hostname);
-        sp.search(sm.getKeyword() , sm.getResult());
-        Assert.assertEquals(sm.getResult() , sp.getResult());
-    }
-//not present on page
-    private void printPositiveData (searchModel sm) {
-        System.out.println(sm.getKeyword());
-
+    //validate that user receives the message with no results
+    @Test(dataProvider = "sqlDp")
+    public void searchNegative (searchModel sm) {
+        printNegativeData(sm);
+        searchNegativeActions(sm);
     }
 
-
-
-    private void searchPositiveActions (searchModel sm)  {
-        SearchPage sp = new SearchPage(driver);
-        sp.openSearchPage(hostname);
-        sp.search(sm.getKeyword() , sm.getResult());
-        Assert.assertTrue(sp.verifyElementAbsent());
+    //validate that message with no results is not present on page;
+    //validate the product title contains the search keyword
+    @Test(dataProvider = "sqlDp1")
+    public void searchPositive (searchModel sm) {
+        printPositiveData(sm);
+        searchPositiveActions(sm);
     }
 
     @DataProvider(name = "sqlDp")
@@ -69,7 +40,7 @@ public class SearchTest extends BaseTest {
                     "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema ,
                     dbUsername , dbPassword);
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM automation.search;");
+            ResultSet results = statement.executeQuery("SELECT * FROM automation.searchnegative;");
             while (results.next()) {
                 searchModel sm = new searchModel();
                 sm.setKeyword(sanitizeNullDbString(results.getString("keyword")));
@@ -92,11 +63,12 @@ public class SearchTest extends BaseTest {
                     "jdbc:mysql://" + dbHostname + ":" + dbPort + "/" + dbSchema ,
                     dbUsername , dbPassword);
             Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery("SELECT * FROM automation.positivesearch;");
+            ResultSet results = statement.executeQuery("SELECT * FROM automation.searchpositive;");
             while (results.next()) {
                 searchModel sm = new searchModel();
                 sm.setKeyword(sanitizeNullDbString(results.getString("keyword")));
-                sm.setResult(sanitizeNullDbString(results.getString("result")));
+//                sm.setResult(sanitizeNullDbString(results.getString("result")));
+                sm.setProductTitle(sanitizeNullDbString(results.getString("producttitle")));
                 dp.add(new Object[]{sm});
             }
             statement.close();
@@ -108,20 +80,34 @@ public class SearchTest extends BaseTest {
     }
 
 
+    private void printNegativeData (searchModel sm) {
+        System.out.println(sm.getKeyword());
+        System.out.println(sm.getResult());
 
-    @Test(dataProvider = "sqlDp")
-    public void searchNegative (searchModel sm) {
-        printNegativeData(sm);
-        searchNegativeActions(sm);
     }
 
-    //validate that "Ne pare rău, dar nu au fost găsite rezultate care să corespundă termenilor dvs.
-// de căutare. Vă rugăm să verificați ortografia sau să adăugați un cuvânt alternativ.
-// De asemenea, puteți verifica produsele de mai jos care v-ar putea interesa." message is not present
-    @Test(dataProvider = "sqlDp1")
-    public void searchPositive (searchModel sm) {
-        printPositiveData(sm);
-        searchPositiveActions(sm);
+    private void printPositiveData (searchModel sm) {
+        System.out.println(sm.getKeyword());
     }
+
+
+    private void searchNegativeActions (searchModel sm) {
+        SearchPage sp = new SearchPage(driver);
+        sp.openSearchPage(hostname);
+        sp.search(sm.getKeyword() , sm.getResult());
+        Assert.assertEquals(sp.getResult() , sm.getResult() );
+    }
+
+
+    private void searchPositiveActions (searchModel sm) {
+        SearchPage sp = new SearchPage(driver);
+        ProductPage pp = new ProductPage(driver);
+        sp.openSearchPage(hostname);
+        sp.search(sm.getKeyword() , sm.getResult());
+        Assert.assertTrue(sp.verifyMissingMessage());
+        sp.pickElement();
+        Assert.assertEquals(pp.productTitle() , sm.getProductTitle());
+    }
+
 
 }

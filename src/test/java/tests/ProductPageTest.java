@@ -2,9 +2,9 @@ package tests;
 
 import com.opencsv.CSVReader;
 import models.productModel;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import pageObject.FilterPage;
 import pageObject.ProductPage;
 
 import java.io.File;
@@ -34,14 +34,16 @@ public class ProductPageTest extends BaseTest {
     }
 
 //validate that the product title from products list is the same with the product title from product page
-    @Test(dataProvider = "csvDp")
-    public void testViewProduct (productModel pm ) throws InterruptedException {
+//    @Test(dataProvider = "csvDp")
+//    public void testViewProduct (productModel pm )  {
+//        FilterPage fp = new FilterPage(driver);
+//        ProductPage pp = new ProductPage(driver);
+//        fp.openFilterPage(hostname);
+//        fp.filterResults();
+//        fp.pickFirstProduct();
 
-        ProductPage pp = new ProductPage(driver);
-        pp.openProductPage(hostname);
-        Assert.assertEquals( pm.getProduct(), pp.openProduct() );
-//        Assert.assertEquals(vp.titleProduct(), vp.openProduct());
+//        Assert.assertEquals( pm.getProduct(), fp.titleFirstProduct(),pp.productTitle() );
 
-    }
+//    }
 
 }

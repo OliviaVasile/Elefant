@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Smoke">
+    <test name="Login">
+        <classes>
+            <class name="tests.LoginTest">
+                <methods>
+                    <include name="sqlLoginPositive"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Add to cart">
+        <classes>
+            <class name="tests.AddToCartTest">
+                <methods>
+                    <include name="addToCart"/>
+                    <include name="addQtyToCart"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Register">
+        <classes>
+            <class name="tests.RegisterTest">
+                <methods>
+                    <include name="sqlNegativeRegister"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Search">
+        <classes>
+            <class name="tests.SearchTest">
+                <methods>
+                    <include name="searchPositive"/>
+                </methods>
+            </class> <!-- tests.AddToCartTest -->
+        </classes>
+    </test>
+    <test name="Logout">
+        <classes>
+            <class name="tests.LogoutTest">
+                <methods>
+                    <include name="sqlLogoutTest"/>
+                </methods>
+            </class> <!-- tests.AddToCartTest -->
+        </classes>
+    </test>
+
+
+    <!-- FinalProject -->
+</suite> <!-- Default Suite -->

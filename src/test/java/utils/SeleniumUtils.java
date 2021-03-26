@@ -9,13 +9,18 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class SeleniumUtils {
@@ -34,6 +39,7 @@ public class SeleniumUtils {
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--start-maximized");
                 driver = new ChromeDriver(chromeOptions);
+
                 break;
 //
 
@@ -99,13 +105,27 @@ public class SeleniumUtils {
 
     public static Integer turnToInteger(String s){
 
-        int is = Integer.valueOf(s);
+        int is = Integer.parseInt(s);
 
         System.out.println("cantitatea este " + is);
         return is;
 
 
     }
+
+    public static Double turnToDouble(String s) throws ParseException {
+
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+            ParsePosition parsePosition = new ParsePosition(0);
+            Number number = numberFormat.parse(s, parsePosition);
+
+            if(parsePosition.getIndex() != s.length()){
+                throw new ParseException("Invalid input", parsePosition.getIndex());
+            }
+
+            return number.doubleValue();
+        }
+
 public static void jsExecute(WebDriver driver, By by) {
     WebElement ele = driver.findElement(by);
     JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -121,14 +141,26 @@ public static void jsExecute(WebDriver driver, By by) {
     }
 
 
+public static void clickOn (WebDriver driver, By by) {
 
-    public static void waitForAjax(WebDriver driver, By by, int timeout) {
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+    List<WebElement> listaProduse = driver.findElements(by);
+
+    for (WebElement link : listaProduse) {
+        link.click();
+    }
+}
+
+    public static boolean verifyElementAbsent (WebDriver driver, By by ) {
+
+        boolean visible = driver.findElement(by).isDisplayed();
+        boolean result = !visible;
+        System.out.println("elementul nu se afla in pagina? " + result);
+        return true;
+    }
 
     }
 
 
 
 
-}
+

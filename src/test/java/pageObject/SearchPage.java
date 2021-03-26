@@ -11,18 +11,22 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.SeleniumUtils;
 
+
+//div[@class='std']
+//*[@id="addsearch-results-input"]
+
 public class SearchPage {
     WebDriver driver;
     WebDriverWait wait;
 
     @FindBy(how = How.ID, using = "addsearch-results-input")
     WebElement searchboxInput;
-    //        @FindBy(how = How.ID, using = "notfoundtext")
-//    WebElement noResult;
+
     @FindBy(how = How.XPATH, using = "//label[@class='addsearch-results-input-icon']")
     WebElement magnGlass;
 
     By noResult = By.id("notfoundtext");
+    By tabelRezultate = By.xpath("//div[@class='main-container col1-layout']");
 
     public SearchPage (WebDriver driver) {
         this.driver = driver;
@@ -30,35 +34,33 @@ public class SearchPage {
         PageFactory.initElements(this.driver , this);
     }
 
-
-
     public void openSearchPage (String hostname) {
         System.out.println("Open the next url:" + hostname);
         driver.get(hostname);
 
     }
 
-    public String getResult ( ) {
-        return SeleniumUtils.waitForGenericElement(driver , noResult , 15).getText();
-
-    }
-
-
-    public void search (String keyword , String result) {
+    public void search (String keyword , String getResult) {
         searchboxInput.clear();
         searchboxInput.sendKeys(keyword);
-        magnGlass.click();
-//        wait.until(ExpectedConditions.elementToBeClickable(noResult)).click();
+        SeleniumUtils.jsExecute(driver , By.xpath("//label[@class='addsearch-results-input-icon']"));
+        SeleniumUtils.waitForGenericElement(driver , tabelRezultate , 10);
 
     }
 
+    public String getResult ( ) {
+        return SeleniumUtils.waitForGenericElement(driver , noResult , 10).getText();
 
-    public boolean verifyElementAbsent ( ){
-
-        boolean visible = driver.findElement(By.id("notfoundtext")).isDisplayed();
-        boolean result = !visible;
-        System.out.println("textul ca nu s-au gasit produse nu se afla in pagina? " + result);
-        return result;
     }
+
+    public boolean verifyMissingMessage ( ) {
+        SeleniumUtils.verifyElementAbsent(driver , noResult);
+        return true;
+    }
+
+    public void pickElement ( ) {
+        SeleniumUtils.clickOn(driver , tabelRezultate);
+    }
+
 }
 

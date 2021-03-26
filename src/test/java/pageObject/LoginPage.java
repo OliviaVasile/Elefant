@@ -19,13 +19,6 @@ public class LoginPage {
     @FindBy(how = How.ID, using = "send2")
     WebElement autentificare;
 
-    @FindBy(how = How.XPATH, using = ("//li[contains(@class, 'error-msg')]/ul/li/span"))
-    WebElement errGeneral;
-    @FindBy(how = How.ID, using = "advice-required-entry-pass")
-    WebElement errPassword;
-    @FindBy(how = How.ID, using = "advice-required-entry-email")
-    WebElement errUserName;
-
     public LoginPage (WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver , 15);
@@ -56,23 +49,5 @@ public class LoginPage {
         driver.get(hostname + "/customer/account/login/");
 
     }
-
-//    public void waitForLoginPage ( ) {
-//        wait.until(ExpectedConditions.elementToBeClickable(autentificare));
-//    }
-//    public WebElement fluentWait (final By locator) {
-//        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
-//                .withTimeout(10 , TimeUnit.SECONDS)
-//                .pollingEvery(5 , TimeUnit.SECONDS)
-//                .ignoring(NoSuchElementException.class);
-//
-//        WebElement foo = wait.until(new Function<WebDriver, WebElement>() {
-//            public WebElement apply (WebDriver driver) {
-//                return driver.findElement(locator);
-//            }
-//        });
-//
-//        return foo;
-//    }
 
 }

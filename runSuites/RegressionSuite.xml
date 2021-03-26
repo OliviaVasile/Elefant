@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression">
+    <!--    <listeners>-->
+    <!--        <listener class-name="reports.TestListenerCustom"/>-->
+    <!--    </listeners>-->
+
+
+    <test name="Search">
+        <classes>
+            <class name="tests.SearchTest">
+                <methods>
+                    <include name="searchPositive"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Search -">
+        <classes>
+            <class name="tests.SearchTest">
+                <methods>
+                    <include name="searchNegative"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Login">
+        <classes>
+            <class name="tests.LoginTest"/>
+        </classes>
+    </test>
+    <test name="Logout">
+        <classes>
+            <class name="tests.LogoutTest"/>
+        </classes>
+    </test>
+    <test name="Register">
+        <classes>
+            <class name="tests.RegisterTest"/>
+        </classes>
+    </test>
+
+    <test name="Add to Cart">
+        <classes>
+            <class name="tests.AddToCartTest"/>
+        </classes>
+    </test>
+    <test name="Update Cart">
+        <classes>
+            <class name="tests.AddToCartTest"/>
+        </classes>
+    </test>
+
+    <test name="Edit Profile">
+        <classes>
+            <class name="tests.EditProfileTest"/>
+        </classes>
+    </test>
+    <test name="Filter">
+        <classes>
+            <class name="tests.FilterTest"/>
+        </classes>
+    </test>
+    <test name="Contact">
+        <classes>
+            <class name="tests.ContactTest"/>
+        </classes>
+    </test>
+
+
+    <!-- FinalProject -->
+</suite> <!-- Default Suite -->

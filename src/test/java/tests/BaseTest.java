@@ -27,7 +27,7 @@ public class BaseTest {
 
         try {
             //read from properties file
-            InputStream input = new FileInputStream("src\\test\\java\\utils\\framework.properties");
+            InputStream input = new FileInputStream("src\\test\\java\\framework.properties");
             Properties prop = new Properties();
             prop.load(input);
 

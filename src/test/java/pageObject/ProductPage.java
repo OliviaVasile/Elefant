@@ -1,16 +1,26 @@
 package pageObject;
 
+import models.searchModel;
+import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.SeleniumUtils;
+
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ProductPage {
     WebDriver driver;
     WebDriverWait wait;
 
+    public static final String WARRANTY_NO = "span[class='exponea-close-warranty']";
+
+    @FindBy(how = How.CSS, using = "div[class='product-name js-gtm-data'] h1")
+    WebElement productTitle;
 
     @FindBy(how = How.XPATH, using = "//button[@title='Adauga in cos']")
     WebElement addButton;
@@ -27,12 +37,17 @@ public class ProductPage {
     @FindBy(how = How.XPATH, using = "//div[@class='exponea-banner23-content']")
     WebElement modalGarantie;
 
-    @FindBy(how = How.CSS, using = "span[class='exponea-close-warranty']")
+    @FindBy(how = How.CSS, using = ProductPage.WARRANTY_NO)
     WebElement nuMultumesc;
+
+//    @FindBy(how = How.ID, using ="super_attribute[174]")
+//    WebElement color;
+
+    By color = By.id("super_attribute[174]");
+    By notInStock = By.xpath("//div[@class='add-to-cart-phone-text out-of-stock']");
 
 
     public ProductPage (WebDriver driver) {
-
         this.driver = driver;
         wait = new WebDriverWait(driver , 15);
         PageFactory.initElements(this.driver , this);
@@ -43,98 +58,71 @@ public class ProductPage {
         driver.get(hostname);
     }
 
+    public String productTitle ( ) {
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div[class='product-name js-gtm-data'] h1")));
+        String title = driver.findElement(By.cssSelector("div[class='product-name js-gtm-data'] h1")).getText();
+//        String title = (String)((JavascriptExecutor)driver).executeScript("getElementsByTagName('h1')[0];");
+        System.out.println("titlul produsului este" + title);
+        return title;
+    }
 
-    public String openProduct ( ) {
-
-        FilterPage fp = new FilterPage(driver);
-        fp.filterResults();
-        WebElement element1 = driver.findElement(By.id("product-collection-image-212609"));
-        element1.click();
-        String result = driver.findElement(By.xpath("//h1[contains(text(),'Aparat pentru clătite Joy')]")).getText();
-        System.out.println(result);
+    public String priceValue ( ) {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("price")));
+        String result = driver.findElement(By.className("price")).getText().split(" ")[0];
+        System.out.println("pretul produsului este " + result);
         return result;
+
+    }
+
+    public void addToCart ( ) {
+        SeleniumUtils.jsExecute(driver , By.xpath("//button[@title='Adauga in cos']"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("span[class='exponea-close-warranty']")));
+        nuMultumesc.click();
+
     }
 
     public void addQToCart (String qty , String mesaj) {
-
-
-        ProductPage vp = new ProductPage(driver);
-        vp.openProduct();
-//        driver.get("https://www.delimano.ro/aparat-pentru-clatite-joy");
         cantitate.clear();
         cantitate.sendKeys(qty);
-        addButton();
-
-        WebDriverWait wait = new WebDriverWait(driver , 15);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='exponea-close-warranty']")));
+        SeleniumUtils.jsExecute(driver , By.xpath("//button[@title='Adauga in cos']"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("span[class='exponea-close-warranty']")));
         nuMultumesc.click();
 
-    }
-
-    public void addToCart (String mesaj) {
-
-        ProductPage vp = new ProductPage(driver);
-        vp.openProduct();
-//            driver.get("https://www.delimano.ro/aparat-pentru-clatite-joy");
-
-        addButton();
-
-        WebDriverWait wait = new WebDriverWait(driver , 15);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='exponea-close-warranty']")));
-        nuMultumesc.click();
-    }
-
-    public void addPlusCart (String qty , String mesaj) {
-
-        ProductPage vp = new ProductPage(driver);
-        vp.openProduct();
-//        driver.get("https://www.delimano.ro/aparat-pentru-clatite-joy");
-//        Actions actions = new Actions(driver);
-//        actions.moveToElement(plus).click().build().perform();
-        cantitate.clear();
-        cantitate.sendKeys(qty);
-        plusButton();
-        addButton();
-
-        WebDriverWait wait = new WebDriverWait(driver , 15);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='exponea-close-warranty']")));
-        nuMultumesc.click();
-    }
-
-
-    public void addButton ( ) {
-
-        WebElement ele = driver.findElement(By.xpath("//button[@title='Adauga in cos']"));
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("arguments[0].click()" , ele);
 
     }
 
-    public void plusButton ( ) {
 
-        WebElement ele = driver.findElement(By.id("add1"));
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("arguments[0].click()" , ele);
+    public void addPlusCart ( ) {
+
+        SeleniumUtils.jsExecute(driver , By.id("add1"));
+        SeleniumUtils.jsExecute(driver , By.xpath("//button[@title='Adauga in cos']"));
+
+    }
+
+    public boolean checkNotInStock ( ) {
+
+        try {
+            driver.findElement(notInStock);
+            System.out.println("Produsul nu este momentan pe stoc. ");
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean checkAddButton ( ) {
+
+        try {
+            driver.findElement(notInStock);
+            return false;
+        } catch (NoSuchElementException e) {
+            return true;
+        }
 
 
     }
 
-//    public  void navigateThroughLinks() throws InterruptedException {
-//
-//        List<WebElement> all_links_webpage = driver.findElements(By.tagName("a"));
-//        System.out.println("Total no of products found: " + all_links_webpage.size());
-//        int k = all_links_webpage.size();
-//        System.out.println("List of products: ");
-//        for (int i = 0; i < k; i++) {
-//            if (all_links_webpage.get(i).getAttribute("href").contains("friteuza")) {
-//                String link = all_links_webpage.get(i).getAttribute("href");
-//
-//            }
-//        }
-//    }
-
-
-    public String productTitle ( ) {
+    public String firstProductTitle ( ) {
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='cart-item-row cart-mobile']//h2[@class='product-name js-gtm-data']")));
 

@@ -7,6 +7,7 @@ public class loginModel {
     private String passwordError;
     private String generalError;
 
+
     public accountModel getAccount ( ) {
         return account;
     }
@@ -43,21 +44,25 @@ public class loginModel {
 
     }
 
+
     public loginModel (accountModel account , String userError , String passwordError , String generalError) {
         this.account = account;
         this.userError = userError;
         this.passwordError = passwordError;
         this.generalError = generalError;
+
     }
 
     public loginModel (String username , String password , String userError , String passwordError , String generalError) {
         accountModel ac = new accountModel();
         ac.setUsername(username);
         ac.setPassword(password);
+
         this.account = ac;
         this.userError = userError;
         this.passwordError = passwordError;
         this.generalError = generalError;
+
 
     }
 }
